@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "./LoginPage.module.css";
 import Logo from "../../assets/logo.png";
 
 const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={`${styles.block} ${styles.leftBlock}`}>
@@ -26,18 +28,23 @@ const LoginPage = () => {
               .min(6, "Пароль має містити щонайменше 6 символів")
               .required("Обов'язкове поле"),
           })}
-          onSubmit={(values) => {
+          onSubmit={(values, { setSubmitting }) => {
             console.log(values);
+            setTimeout(() => {
+              setSubmitting(false); // імітація запиту
+            }, 2000);
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, errors, touched }) => (
             <Form className={styles.form}>
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email</label>
                 <Field
                   name="email"
                   type="email"
-                  className={styles.input}
+                  className={`${styles.input} ${
+                    errors.email && touched.email ? styles.inputError : ""
+                  }`}
                   placeholder="Введіть email"
                 />
                 <ErrorMessage
@@ -49,12 +56,24 @@ const LoginPage = () => {
 
               <div className={styles.formGroup}>
                 <label htmlFor="password">Пароль</label>
-                <Field
-                  name="password"
-                  type="password"
-                  className={styles.input}
-                  placeholder="Введіть пароль"
-                />
+                <div className={styles.inputWrapper}>
+                  <Field
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    className={`${styles.input} ${
+                      errors.password && touched.password
+                        ? styles.inputError
+                        : ""
+                    }`}
+                    placeholder="Введіть пароль"
+                  />
+                  <span
+                    className={styles.eyeIcon}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? "🙈" : "👁️"}
+                  </span>
+                </div>
                 <ErrorMessage
                   name="password"
                   component="div"
@@ -67,12 +86,23 @@ const LoginPage = () => {
                 className={styles.loginButton}
                 disabled={isSubmitting}
               >
-                Увійти
-                <span className={styles.buttonIcon}>➔</span>
+                {isSubmitting ? (
+                  <div className={styles.loader}></div>
+                ) : (
+                  <>
+                    Увійти
+                    <span className={styles.buttonIcon}>➔</span>
+                  </>
+                )}
               </button>
             </Form>
           )}
         </Formik>
+
+        <button className={`${styles.loginButton} ${styles.secondaryButton}`}>
+          Створити акаунт
+          <span className={styles.buttonIcon}>✚</span>
+        </button>
       </div>
     </div>
   );
