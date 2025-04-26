@@ -1,11 +1,14 @@
 import React from "react";
 import styles from "./HomePage.module.css";
+import Logo from "../../assets/logo.png";
 
 const Home = () => {
   return (
     <div className={styles.container}>
       <div className={`${styles.block} ${styles.leftBlock}`}>
-        <div className={styles.logo}>TaskManager</div>
+        <div className={styles.logo}>
+          <img src={Logo} alt="TaskManager Logo" className={styles.logoImage} />
+        </div>
         <div className={styles.slogan}>Легко. Швидко. Стильно.</div>
       </div>
 

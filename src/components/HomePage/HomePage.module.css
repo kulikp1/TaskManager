@@ -20,8 +20,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 700px; /* фіксована мінімальна висота */
-  width: 500px; /* щоб були однакові */
+  height: 700px;
+  width: 500px;
 }
 
 .leftBlock {
@@ -29,10 +29,12 @@
 }
 
 .logo {
-  font-size: 2.8rem;
-  font-weight: 800;
-  color: #3b82f6;
   margin-bottom: 1rem;
+}
+
+.logoImage {
+  width: 120px;
+  height: auto;
 }
 
 .slogan {
@@ -47,7 +49,7 @@
   padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* додаємо це! */
+  align-items: flex-start;
 }
 
 .title {
@@ -55,8 +57,8 @@
   font-weight: 700;
   color: #111827;
   margin-bottom: 1.5rem;
-  text-align: left; /* додаємо */
-  width: 100%; /* щоб розтягнути */
+  text-align: left;
+  width: 100%;
 }
 
 .description {
@@ -64,15 +66,15 @@
   color: #6b7280;
   margin-bottom: 2rem;
   line-height: 1.6;
-  text-align: left; /* додаємо */
-  width: 100%; /* щоб розтягнути */
+  text-align: left;
+  width: 100%;
 }
 
 .features {
   list-style: none;
   padding: 0;
   margin-bottom: 2.5rem;
-  width: 100%; /* щоб зайняло всю ширину */
+  width: 100%;
 }
 
 .features li {
@@ -103,7 +105,7 @@
   border-radius: 12px;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
-  margin-top: auto; /* притискає кнопку до низу */
+  margin-top: auto;
 }
 
 .loginButton:hover {
