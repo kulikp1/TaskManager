@@ -44,12 +44,19 @@
 .logo {
   margin-bottom: 1.5rem;
 }
+
 .logoImage {
   width: 370px;
   height: auto;
-  border-radius: 50% 40% 60% 50% / 50% 60% 40% 50%;
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
   object-fit: cover;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.logoImage:hover {
+  transform: scale(1.07) rotate(2deg);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.5);
 }
 
 .slogan {
@@ -110,13 +117,36 @@
   border: none;
   border-radius: 16px;
   cursor: pointer;
-  transition: background 0.4s ease, transform 0.3s ease;
+  transition: all 0.4s ease;
   margin-top: auto;
   width: 100%;
   text-align: center;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
 .loginButton:hover {
   background: linear-gradient(90deg, #2563eb, #3b82f6);
-  transform: scale(1.05);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.5);
+}
+
+.loginButton:hover .buttonIcon {
+  transform: translateX(5px);
+}
+
+.loginButton:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+}
+
+.buttonIcon {
+  transition: transform 0.4s ease;
+  font-size: 1.4rem;
 }

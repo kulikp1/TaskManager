@@ -27,7 +27,10 @@ const Home = () => {
           <li>Аналіз ефективності</li>
           <li>Мобільна доступність</li>
         </ul>
-        <button className={styles.loginButton}>Увійти</button>
+        <button className={styles.loginButton}>
+          Увійти
+          <span className={styles.buttonIcon}>➔</span>
+        </button>
       </div>
     </div>
   );
