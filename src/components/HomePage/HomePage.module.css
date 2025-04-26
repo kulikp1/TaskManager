@@ -1,0 +1,112 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f9fafb;
+  font-family: "Inter", "Poppins", sans-serif;
+  gap: 40px;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+.block {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  padding: 3rem 2.5rem;
+  flex: 1 1 400px; /* мінімальна ширина 400px, але гнучка */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 700px; /* фіксована мінімальна висота */
+  width: 500px; /* щоб були однакові */
+}
+
+.leftBlock {
+  text-align: center;
+}
+
+.logo {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #3b82f6;
+  margin-bottom: 1rem;
+}
+
+.slogan {
+  font-size: 1.2rem;
+  color: #6b7280;
+}
+
+.rightBlock {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* додаємо це! */
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.5rem;
+  text-align: left; /* додаємо */
+  width: 100%; /* щоб розтягнути */
+}
+
+.description {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  text-align: left; /* додаємо */
+  width: 100%; /* щоб розтягнути */
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2.5rem;
+  width: 100%; /* щоб зайняло всю ширину */
+}
+
+.features li {
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.features li::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #3b82f6;
+  border-radius: 50%;
+  margin-right: 0.8rem;
+}
+
+.loginButton {
+  background: #3b82f6;
+  color: white;
+  padding: 0.9rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: auto; /* притискає кнопку до низу */
+}
+
+.loginButton:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}

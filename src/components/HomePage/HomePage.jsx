@@ -1,0 +1,30 @@
+import React from "react";
+import styles from "./HomePage.module.css";
+
+const Home = () => {
+  return (
+    <div className={styles.container}>
+      <div className={`${styles.block} ${styles.leftBlock}`}>
+        <div className={styles.logo}>TaskManager</div>
+        <div className={styles.slogan}>Легко. Швидко. Стильно.</div>
+      </div>
+
+      <div className={`${styles.block} ${styles.rightBlock}`}>
+        <h1 className={styles.title}>Організуй свій день без стресу</h1>
+        <p className={styles.description}>
+          Керуйте завданнями, ставте пріоритети та досягайте цілей з інтуїтивно
+          зрозумілим інтерфейсом і потужними функціями.
+        </p>
+        <ul className={styles.features}>
+          <li>Управління проектами</li>
+          <li>Дедлайни та нагадування</li>
+          <li>Аналіз ефективності</li>
+          <li>Мобільна доступність</li>
+        </ul>
+        <button className={styles.loginButton}>Увійти</button>
+      </div>
+    </div>
+  );
+};
+
+export default Home;
