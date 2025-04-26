@@ -33,7 +33,8 @@
 }
 
 .logoImage {
-  width: 120px;
+  width: 370px;
+  border-radius: 50%;
   height: auto;
 }
 
