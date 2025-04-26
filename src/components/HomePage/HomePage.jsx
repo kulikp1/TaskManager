@@ -13,7 +13,10 @@ const Home = () => {
       </div>
 
       <div className={`${styles.block} ${styles.rightBlock}`}>
-        <h1 className={styles.title}>Організуй свій день без стресу</h1>
+        <h1 className={styles.title}>
+          Організуй свій день{" "}
+          <span style={{ color: "#3b82f6" }}>без стресу</span>
+        </h1>
         <p className={styles.description}>
           Керуйте завданнями, ставте пріоритети та досягайте цілей з інтуїтивно
           зрозумілим інтерфейсом і потужними функціями.
