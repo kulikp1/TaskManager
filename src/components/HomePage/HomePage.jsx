@@ -1,8 +1,15 @@
 import React from "react";
 import styles from "./HomePage.module.css";
 import Logo from "../../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
   return (
     <div className={styles.container}>
       <div className={`${styles.block} ${styles.leftBlock}`}>
@@ -27,7 +34,7 @@ const Home = () => {
           <li>Аналіз ефективності</li>
           <li>Мобільна доступність</li>
         </ul>
-        <button className={styles.loginButton}>
+        <button onClick={handleLoginClick} className={styles.loginButton}>
           Увійти
           <span className={styles.buttonIcon}>➔</span>
         </button>
