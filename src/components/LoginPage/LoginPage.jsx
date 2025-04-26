@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { FiEye, FiEyeOff } from "react-icons/fi"; // <-- Додали іконки
 import styles from "./LoginPage.module.css";
 import Logo from "../../assets/logo.png";
 
@@ -31,7 +32,7 @@ const LoginPage = () => {
           onSubmit={(values, { setSubmitting }) => {
             console.log(values);
             setTimeout(() => {
-              setSubmitting(false); // імітація запиту
+              setSubmitting(false);
             }, 2000);
           }}
         >
@@ -71,7 +72,11 @@ const LoginPage = () => {
                     className={styles.eyeIcon}
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? "🙈" : "👁️"}
+                    {showPassword ? (
+                      <FiEyeOff size={22} />
+                    ) : (
+                      <FiEye size={22} />
+                    )}
                   </span>
                 </div>
                 <ErrorMessage
@@ -81,28 +86,33 @@ const LoginPage = () => {
                 />
               </div>
 
-              <button
-                type="submit"
-                className={styles.loginButton}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <div className={styles.loader}></div>
-                ) : (
-                  <>
-                    Увійти
-                    <span className={styles.buttonIcon}>➔</span>
-                  </>
-                )}
-              </button>
+              <div className={styles.buttonsWrapper}>
+                <button
+                  type="submit"
+                  className={styles.loginButton}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <div className={styles.loader}></div>
+                  ) : (
+                    <>
+                      Увійти
+                      <span className={styles.buttonIcon}>➔</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  className={`${styles.loginButton} ${styles.secondaryButton}`}
+                >
+                  Створити акаунт
+                  <span className={styles.buttonIcon}>✚</span>
+                </button>
+              </div>
             </Form>
           )}
         </Formik>
-
-        <button className={`${styles.loginButton} ${styles.secondaryButton}`}>
-          Створити акаунт
-          <span className={styles.buttonIcon}>✚</span>
-        </button>
       </div>
     </div>
   );
