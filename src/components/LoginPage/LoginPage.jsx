@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { FiEye, FiEyeOff } from "react-icons/fi"; // <-- Додали іконки
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import styles from "./LoginPage.module.css";
 import Logo from "../../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
@@ -105,6 +107,7 @@ const LoginPage = () => {
                 <button
                   type="button"
                   className={`${styles.loginButton} ${styles.secondaryButton}`}
+                  onClick={() => navigate("/register")}
                 >
                   Створити акаунт
                   <span className={styles.buttonIcon}>✚</span>
