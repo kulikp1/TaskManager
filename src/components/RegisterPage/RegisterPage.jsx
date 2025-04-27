@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import styles from "./RegisterPage.module.css"; // інший файл стилів (але можемо використати копію LoginPage.module.css)
+import styles from "./RegisterPage.module.css";
 import Logo from "../../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
@@ -140,6 +142,7 @@ const RegisterPage = () => {
                 <button
                   type="button"
                   className={`${styles.loginButton} ${styles.secondaryButton}`}
+                  onClick={() => navigate("/login")}
                 >
                   Уже маєте акаунт?
                   <span className={styles.buttonIcon}>➔</span>
