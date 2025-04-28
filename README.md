@@ -75,3 +75,27 @@
 git clone https://github.com/your-username/taskmanager.git
 cd taskmanager
 ```
+
+2. Встановлення залежностей
+   Фронтенд
+   bash
+   Копировать
+   Редактировать
+   cd client
+   npm install
+   npm run dev
+   Бекенд
+   bash
+   Копировать
+   Редактировать
+   cd server
+   npm install
+   npm run dev
+3. Налаштування змінних середовища
+   У папці server створіть .env файл із наступними змінними:
+
+env
+Копировать
+Редактировать
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
