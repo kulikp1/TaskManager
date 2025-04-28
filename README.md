@@ -1,12 +1,108 @@
-# React + Vite
+TaskManager
+TaskManager — це веб-додаток для управління завданнями та проєктами. Він дозволяє створювати особисті облікові записи, планувати завдання через інтерактивний календар, керувати пріоритетами, дедлайнами та відстежувати свій прогрес через аналітику і графіки.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Основний функціонал
+Аутентифікація користувачів
 
-Currently, two official plugins are available:
+Реєстрація через e-mail/пароль або Google OAuth
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Вхід/вихід із особистого кабінету
 
-## Expanding the ESLint configuration
+Захист даних через JWT токени
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Управління завданнями
+
+Створення завдань з параметрами: назва, опис, дедлайн, категорія, пріоритет, статус, нотатки
+
+Редагування та видалення завдань
+
+Інтерактивний календар
+
+Відображення завдань по днях
+
+Додавання та редагування завдань через календар
+
+Drag-and-drop зміна порядку завдань
+
+Нагадування про дедлайни
+
+Сповіщення через додаток (з перспективою додати email-нотифікації)
+
+Категорії та фільтрація
+
+Фільтрація завдань за статусом, датою, категорією, пріоритетом
+
+Аналітика та статистика
+
+Діаграми прогресу (відсоток виконаних/прострочених завдань)
+
+Графіки активності за період
+
+Стек технологій
+Фронтенд
+React
+
+React Router
+
+Redux Toolkit
+
+FullCalendar
+
+React Beautiful DnD
+
+Chart.js
+
+MUI або Tailwind CSS
+
+React Toastify
+
+Бекенд
+Node.js
+
+Express.js
+
+MongoDB
+
+Mongoose
+
+JWT
+
+bcrypt.js
+
+Встановлення та запуск проєкту
+
+1. Клонування репозиторію
+   bash
+   Копировать
+   Редактировать
+   git clone https://github.com/your-username/taskmanager.git
+   cd taskmanager
+2. Налаштування фронтенду
+   bash
+   Копировать
+   Редактировать
+   cd client
+   npm install
+   npm run dev
+3. Налаштування бекенду
+   bash
+   Копировать
+   Редактировать
+   cd server
+   npm install
+   npm run dev
+   Примітка: Потрібно створити .env файл у папці server із наступними змінними:
+
+ini
+Копировать
+Редактировать
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+Плани на майбутнє
+Email-нагадування про дедлайни
+
+Підтримка командної роботи (спільні проєкти)
+
+Розширені налаштування безпеки акаунтів
+
+Темна тема інтерфейсу
