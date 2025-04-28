@@ -52,9 +52,6 @@
 - [React Router](https://reactrouter.com/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [FullCalendar](https://fullcalendar.io/)
-- [React-Beautiful-DnD](https://github.com/atlassian/react-beautiful-dnd)
-- [Chart.js](https://www.chartjs.org/)
-- [MUI (Material-UI)](https://mui.com/) або [Tailwind CSS](https://tailwindcss.com/)
 - [React-toastify](https://fkhadra.github.io/react-toastify/)
 
 ### Бекенд
@@ -71,30 +68,21 @@
 
 ### 1. Клонування репозиторію
 
-```bash
 git clone https://github.com/your-username/taskmanager.git
 cd taskmanager
+
 2. Встановлення залежностей
-Фронтенд
-bash
-Копировать
-Редактировать
-cd client
-npm install
-npm run dev
+   Фронтенд
+   cd client
+   npm install
+   npm run dev
+
 Бекенд
-bash
-Копировать
-Редактировать
 cd server
 npm install
 npm run dev
-3. Налаштування змінних середовища
-У папці server створіть файл .env і додайте туди такі змінні:
 
-env
-Копировать
-Редактировать
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-```
+3. Налаштування змінних середовища
+   У папці server створіть файл .env і додайте туди такі змінні:
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
