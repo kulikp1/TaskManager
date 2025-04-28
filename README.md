@@ -179,7 +179,6 @@ cd taskmanager
 
 ### 3. Configure environment variables
 
-In the server folder, create a .env file and add the following variables:
-env
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
+    In the server folder, create a .env file and add the following variables:
+    MONGO_URI=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret_key
