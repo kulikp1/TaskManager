@@ -14,11 +14,20 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ email, password: hashedPassword });
 
-    res.status(201).json({ message: 'Реєстрація успішна', userId: user._id });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '7d',
+    });
+
+    res.status(201).json({
+      message: 'Реєстрація успішна',
+      token, // <--- потрібне для фронтенду
+      userId: user._id,
+    });
   } catch (error) {
     res.status(500).json({ message: 'Помилка сервера' });
   }
 };
+
 
 export const login = async (req, res) => {
   const { email, password } = req.body;

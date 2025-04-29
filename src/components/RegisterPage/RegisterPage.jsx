@@ -5,6 +5,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import styles from "./RegisterPage.module.css";
 import Logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import API from "../../api/api"; // 👈 імпорт axios-інстансу
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,27 +38,19 @@ const RegisterPage = () => {
           })}
           onSubmit={async (values, { setSubmitting, setErrors }) => {
             try {
-              const response = await fetch("/api/auth/register", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  email: values.email,
-                  password: values.password,
-                }),
+              const response = await API.post("/auth/register", {
+                email: values.email,
+                password: values.password,
               });
 
-              const data = await response.json();
-
-              if (!response.ok) {
-                throw new Error(data.message || "Помилка реєстрації");
-              }
+              const data = response.data;
 
               localStorage.setItem("token", data.token);
               navigate("/dashboard");
             } catch (err) {
-              setErrors({ email: err.message });
+              const message =
+                err.response?.data?.message || "Сталася помилка при реєстрації";
+              setErrors({ email: message });
             } finally {
               setSubmitting(false);
             }
