@@ -31,11 +31,29 @@ const LoginPage = () => {
               .min(6, "Пароль має містити щонайменше 6 символів")
               .required("Обов'язкове поле"),
           })}
-          onSubmit={(values, { setSubmitting }) => {
-            console.log(values);
-            setTimeout(() => {
+          onSubmit={async (values, { setSubmitting, setErrors }) => {
+            try {
+              const response = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+              });
+
+              const data = await response.json();
+
+              if (!response.ok) {
+                throw new Error(data.message || "Помилка входу");
+              }
+
+              localStorage.setItem("token", data.token);
+              navigate("/dashboard");
+            } catch (err) {
+              setErrors({ password: err.message });
+            } finally {
               setSubmitting(false);
-            }, 2000);
+            }
           }}
         >
           {({ isSubmitting, errors, touched }) => (
@@ -97,10 +115,7 @@ const LoginPage = () => {
                   {isSubmitting ? (
                     <div className={styles.loader}></div>
                   ) : (
-                    <>
-                      Увійти
-                      <span className={styles.buttonIcon}>➔</span>
-                    </>
+                    <>Увійти ➔</>
                   )}
                 </button>
 
@@ -109,8 +124,7 @@ const LoginPage = () => {
                   className={`${styles.loginButton} ${styles.secondaryButton}`}
                   onClick={() => navigate("/register")}
                 >
-                  Створити акаунт
-                  <span className={styles.buttonIcon}>✚</span>
+                  Створити акаунт ✚
                 </button>
               </div>
             </Form>

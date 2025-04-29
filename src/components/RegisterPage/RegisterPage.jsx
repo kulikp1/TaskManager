@@ -35,11 +35,32 @@ const RegisterPage = () => {
               .oneOf([Yup.ref("password"), null], "Паролі повинні співпадати")
               .required("Обов'язкове поле"),
           })}
-          onSubmit={(values, { setSubmitting }) => {
-            console.log(values);
-            setTimeout(() => {
+          onSubmit={async (values, { setSubmitting, setErrors }) => {
+            try {
+              const response = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email: values.email,
+                  password: values.password,
+                }),
+              });
+
+              const data = await response.json();
+
+              if (!response.ok) {
+                throw new Error(data.message || "Помилка реєстрації");
+              }
+
+              localStorage.setItem("token", data.token);
+              navigate("/dashboard");
+            } catch (err) {
+              setErrors({ email: err.message });
+            } finally {
               setSubmitting(false);
-            }, 2000);
+            }
           }}
         >
           {({ isSubmitting, errors, touched }) => (
@@ -132,10 +153,7 @@ const RegisterPage = () => {
                   {isSubmitting ? (
                     <div className={styles.loader}></div>
                   ) : (
-                    <>
-                      Зареєструватися
-                      <span className={styles.buttonIcon}>✚</span>
-                    </>
+                    <>Зареєструватися ✚</>
                   )}
                 </button>
 
@@ -144,8 +162,7 @@ const RegisterPage = () => {
                   className={`${styles.loginButton} ${styles.secondaryButton}`}
                   onClick={() => navigate("/login")}
                 >
-                  Уже маєте акаунт?
-                  <span className={styles.buttonIcon}>➔</span>
+                  Уже маєте акаунт? ➔
                 </button>
               </div>
             </Form>
