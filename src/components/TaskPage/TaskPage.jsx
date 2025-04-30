@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { Plus, Trash2, UserCircle } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import styles from "./TaskPage.module.css";
 
 const initialColumns = {
@@ -70,21 +70,24 @@ const TaskPage = () => {
   return (
     <div className={styles.taskPage}>
       <header className={styles.header}>
-        <h1 className={styles.logo}>📝 Kanban Board</h1>
+        <div className={styles.headerLeft}>Task Manager</div>
+
         <div className={styles.inputContainer}>
           <input
             className={styles.input}
             value={newTaskText}
             onChange={(e) => setNewTaskText(e.target.value)}
             placeholder="Enter new task"
+            onKeyDown={(e) => e.key === "Enter" && handleAddTask()}
           />
           <button onClick={handleAddTask} className={styles.addButton}>
             <Plus size={18} /> Add
           </button>
         </div>
-        <div className={styles.userInfo}>
-          <UserCircle className={styles.userIcon} />
-          <span className={styles.username}>Username</span>
+
+        <div className={styles.headerRight}>
+          <span>User</span>
+          <div className={styles.avatarPlaceholder}>U</div>
         </div>
       </header>
 
