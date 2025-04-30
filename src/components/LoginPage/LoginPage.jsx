@@ -33,13 +33,16 @@ const LoginPage = () => {
           })}
           onSubmit={async (values, { setSubmitting, setErrors }) => {
             try {
-              const response = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values),
-              });
+              const response = await fetch(
+                "http://localhost:3000/api/auth/login",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(values),
+                }
+              );
 
               const data = await response.json();
 
@@ -47,7 +50,11 @@ const LoginPage = () => {
                 throw new Error(data.message || "Помилка входу");
               }
 
+              // Збереження токена (і при бажанні імені)
               localStorage.setItem("token", data.token);
+              localStorage.setItem("username", data.user.username);
+
+              // Перехід на захищену сторінку
               navigate("/dashboard");
             } catch (err) {
               setErrors({ password: err.message });
