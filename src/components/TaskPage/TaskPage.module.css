@@ -7,7 +7,30 @@
   font-family: "Inter", sans-serif;
 }
 
-/* --- HEADER --- */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  animation: fadeIn 0.8s ease-in;
+}
+
+@media (min-width: 768px) {
+  .columns {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .header {
   width: 100%;
   display: flex;
@@ -32,7 +55,6 @@
   background: linear-gradient(90deg, #2563eb, #60a5fa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  position: relative;
   animation: flicker 2s infinite;
 }
 
@@ -49,7 +71,6 @@
   }
 }
 
-/* --- AVATAR --- */
 .headerRight {
   display: flex;
   align-items: center;
@@ -70,7 +91,6 @@
   box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
 }
 
-/* --- INPUT --- */
 .inputContainer {
   display: flex;
   align-items: center;
@@ -117,31 +137,6 @@
   transform: translateY(-2px) scale(1.05);
 }
 
-/* --- COLUMNS --- */
-.columns {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1.5rem;
-  animation: fadeIn 0.8s ease-in;
-}
-
-@media (min-width: 768px) {
-  .columns {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .column {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(8px);
@@ -178,7 +173,6 @@
   background: linear-gradient(to right, #1e3a8a, #3b82f6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  position: relative;
 }
 
 .columnTitle::after {
@@ -191,7 +185,6 @@
   border-radius: 6px;
 }
 
-/* --- TASKS --- */
 .taskList {
   display: flex;
   flex-direction: column;
@@ -211,7 +204,6 @@
   cursor: grab;
   transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-  position: relative;
 }
 
 .task:hover {
@@ -222,6 +214,11 @@
 
 .task:active {
   cursor: grabbing;
+}
+
+.taskActions {
+  display: flex;
+  gap: 6px;
 }
 
 .deleteIcon {
@@ -245,62 +242,11 @@
   color: #d9534f;
 }
 
-/* вже наявні стилі — залишаються */
-
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.modal {
-  background-color: white;
-  border-radius: 16px;
-  padding: 24px;
-  width: 300px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-  text-align: center;
-}
-
-.modalButtons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.confirmButton {
-  background-color: #d9534f;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.cancelButton {
-  background-color: #ddd;
-  color: black;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.editInput {
-  width: 100%;
-  margin-bottom: 4px;
-}
-
-.dateInput {
-  width: 100%;
-  margin-bottom: 4px;
+.taskMeta small {
+  display: block;
+  color: #666;
+  font-size: 0.75rem;
+  margin-top: 4px;
 }
 
 .overdue {
@@ -315,108 +261,4 @@
 
 .upcoming {
   border-left: 4px solid #2ecc71;
-}
-
-.taskMeta small {
-  display: block;
-  color: #666;
-  font-size: 0.75rem;
-  margin-top: 4px;
-}
-
-.taskActions {
-  display: flex;
-  gap: 6px;
-}
-
-.newTaskFields {
-  display: flex;
-  gap: 0.75rem;
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  max-width: 400px;
-  width: 100%;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.modalButtons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-}
-
-.confirmButton {
-  background-color: #2563eb;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-.cancelButton {
-  background-color: #e5e7eb;
-  color: black;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-.dateInput {
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  font-size: 14px;
-  background-color: #f9fafb;
-  color: #111827;
-  width: 100%;
-}
-
-.dateInput {
-  color: transparent;
-}
-
-.dateInput:focus,
-.dateInput:valid {
-  color: #111827; /* нормальний колір після вибору */
-}
-
-.datePickerInput {
-  width: 100%;
-  padding: 0.6rem 0.8rem;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-size: 1rem;
-  background-color: #f8fafc;
-  color: #111827;
-  margin-bottom: 12px;
-  transition: box-shadow 0.3s ease;
-}
-
-.datePickerInput:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }

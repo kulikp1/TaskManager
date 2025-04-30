@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
-
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Trash2, Pencil } from "lucide-react";
 import styles from "./TaskPage.module.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import AddTaskModal from "../Modals/AddTaskModal/AddTaskModal";
+import DeleteConfirmModal from "../Modals/DeleteConfirmModal/DeleteConfirmModal";
 
 const initialColumns = {
   todo: { title: "To Do", tasks: [] },
@@ -127,7 +126,6 @@ const TaskPage = () => {
     <div className={styles.taskPage}>
       <header className={styles.header}>
         <div className={styles.headerLeft}>Task Manager</div>
-
         <div className={styles.inputContainer}>
           <button
             onClick={() => setShowAddModal(true)}
@@ -136,7 +134,6 @@ const TaskPage = () => {
             <Plus size={18} /> Add
           </button>
         </div>
-
         <div className={styles.headerRight}>
           <span>User</span>
           <div className={styles.avatarPlaceholder}>U</div>
@@ -224,92 +221,25 @@ const TaskPage = () => {
         ))}
       </div>
 
-      {/* Модальне вікно додавання задачі */}
       <AnimatePresence>
         {showAddModal && (
-          <motion.div
-            className={styles.modalOverlay}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className={styles.modal}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <h3>Нова задача</h3>
-              <input
-                type="text"
-                placeholder="Назва задачі"
-                value={newTaskText}
-                onChange={(e) => setNewTaskText(e.target.value)}
-                className={styles.input}
-              />
-              <DatePicker
-                selected={newTaskDeadline ? new Date(newTaskDeadline) : null}
-                onChange={(date) =>
-                  setNewTaskDeadline(date?.toISOString() || "")
-                }
-                placeholderText="Оберіть дедлайн"
-                className={styles.datePickerInput}
-                dateFormat="dd.MM.yyyy"
-                minDate={new Date()}
-              />
-
-              <div className={styles.modalButtons}>
-                <button
-                  onClick={handleAddTask}
-                  className={styles.confirmButton}
-                >
-                  Додати
-                </button>
-                <button
-                  onClick={() => setShowAddModal(false)}
-                  className={styles.cancelButton}
-                >
-                  Скасувати
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
+          <AddTaskModal
+            newTaskText={newTaskText}
+            newTaskDeadline={newTaskDeadline}
+            setNewTaskText={setNewTaskText}
+            setNewTaskDeadline={setNewTaskDeadline}
+            onAdd={handleAddTask}
+            onClose={() => setShowAddModal(false)}
+          />
         )}
       </AnimatePresence>
 
-      {/* Модалка підтвердження видалення */}
       <AnimatePresence>
         {confirmDelete && (
-          <motion.div
-            className={styles.modalOverlay}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className={styles.modal}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-            >
-              <p>Ви впевнені, що хочете видалити цю задачу?</p>
-              <div className={styles.modalButtons}>
-                <button
-                  onClick={confirmAndDelete}
-                  className={styles.confirmButton}
-                >
-                  Так
-                </button>
-                <button
-                  onClick={() => setConfirmDelete(null)}
-                  className={styles.cancelButton}
-                >
-                  Скасувати
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
+          <DeleteConfirmModal
+            onConfirm={confirmAndDelete}
+            onCancel={() => setConfirmDelete(null)}
+          />
         )}
       </AnimatePresence>
     </div>
