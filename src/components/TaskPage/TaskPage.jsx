@@ -166,18 +166,26 @@ const TaskPage = () => {
                   >
                     {isEditing ? (
                       <>
-                        <input
-                          className={styles.editInput}
-                          value={editedText}
-                          onChange={(e) => setEditedText(e.target.value)}
-                        />
-                        <input
-                          type="date"
-                          className={styles.dateInput}
-                          value={editedDeadline}
-                          onChange={(e) => setEditedDeadline(e.target.value)}
-                        />
-                        <button onClick={saveEdit}>✅</button>
+                        <div className={styles.editContainer}>
+                          <input
+                            className={styles.editInput}
+                            value={editedText}
+                            onChange={(e) => setEditedText(e.target.value)}
+                            placeholder="Назва задачі"
+                          />
+                          <input
+                            type="date"
+                            className={styles.editDate}
+                            value={editedDeadline}
+                            onChange={(e) => setEditedDeadline(e.target.value)}
+                          />
+                          <button
+                            className={styles.saveButton}
+                            onClick={saveEdit}
+                          >
+                            Зберегти
+                          </button>
+                        </div>
                       </>
                     ) : (
                       <>

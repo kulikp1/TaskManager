@@ -55,7 +55,7 @@ const LoginPage = () => {
               localStorage.setItem("username", data.user.username);
 
               // Перехід на захищену сторінку
-              navigate("/dashboard");
+              navigate("/home");
             } catch (err) {
               setErrors({ password: err.message });
             } finally {
