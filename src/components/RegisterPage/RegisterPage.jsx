@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -5,7 +6,6 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import styles from "./RegisterPage.module.css";
 import Logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import API from "../../api/api"; // 👈 імпорт axios-інстансу
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,27 +36,36 @@ const RegisterPage = () => {
               .oneOf([Yup.ref("password"), null], "Паролі повинні співпадати")
               .required("Обов'язкове поле"),
           })}
-          onSubmit={async (values, { setSubmitting, setErrors }) => {
+          onSubmit={async (values, { setSubmitting, setStatus }) => {
             try {
-              const response = await API.post("/auth/register", {
-                email: values.email,
-                password: values.password,
-              });
+              const response = await fetch(
+                "http://localhost:3000/api/auth/register",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    username: values.email.split("@")[0],
+                    email: values.email,
+                    password: values.password,
+                  }),
+                }
+              );
 
-              const data = response.data;
+              const data = await response.json();
 
-              localStorage.setItem("token", data.token);
-              navigate("/dashboard");
-            } catch (err) {
-              const message =
-                err.response?.data?.message || "Сталася помилка при реєстрації";
-              setErrors({ email: message });
+              if (!response.ok) {
+                setStatus(data.message || "Сталася помилка");
+              } else {
+                navigate("/login");
+              }
+            } catch (error) {
+              setStatus("Помилка з'єднання з сервером");
             } finally {
               setSubmitting(false);
             }
           }}
         >
-          {({ isSubmitting, errors, touched }) => (
+          {({ isSubmitting, errors, touched, status }) => (
             <Form className={styles.form}>
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email</label>
@@ -136,6 +145,8 @@ const RegisterPage = () => {
                   className={styles.error}
                 />
               </div>
+
+              {status && <div className={styles.error}>{status}</div>}
 
               <div className={styles.buttonsWrapper}>
                 <button
