@@ -6,7 +6,6 @@
   min-height: 100vh;
   font-family: "Inter", sans-serif;
 }
-
 .columns {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -53,7 +52,7 @@
   font-size: 2rem;
   font-weight: 800;
   background: linear-gradient(90deg, #2563eb, #60a5fa);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: flicker 2s infinite;
 }
@@ -89,15 +88,6 @@
   align-items: center;
   border-radius: 50%;
   box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
-}
-
-.inputContainer {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex: 1;
-  max-width: 500px;
-  justify-content: center;
 }
 
 .input {
@@ -171,7 +161,7 @@
   text-align: center;
   margin-bottom: 1.25rem;
   background: linear-gradient(to right, #1e3a8a, #3b82f6);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -221,27 +211,6 @@
   gap: 6px;
 }
 
-.deleteIcon {
-  width: 1.2rem;
-  height: 1.2rem;
-  color: #ef4444;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.deleteIcon:hover {
-  color: #dc2626;
-}
-
-.iconButton {
-  background: none;
-  border: none;
-  padding: 0;
-  margin-left: auto;
-  cursor: pointer;
-  color: #d9534f;
-}
-
 .taskMeta small {
   display: block;
   color: #666;
@@ -251,7 +220,7 @@
 
 .overdue {
   border-left: 4px solid #e74c3c;
-  background-color: #ffeaea;
+  background-color: #f9ebeb;
 }
 
 .dueToday {
@@ -261,6 +230,7 @@
 
 .upcoming {
   border-left: 4px solid #2ecc71;
+  background-color: #edf8f2;
 }
 
 .editContainer {
@@ -304,4 +274,10 @@
 .saveButton:hover {
   background: linear-gradient(90deg, #059669, #10b981);
   transform: scale(1.05);
+}
+
+.addTaskContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }

@@ -126,14 +126,7 @@ const TaskPage = () => {
     <div className={styles.taskPage}>
       <header className={styles.header}>
         <div className={styles.headerLeft}>Task Manager</div>
-        <div className={styles.inputContainer}>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className={styles.addButton}
-          >
-            <Plus size={18} /> Add
-          </button>
-        </div>
+
         <div className={styles.headerRight}>
           <span>User</span>
           <div className={styles.avatarPlaceholder}>U</div>
@@ -227,6 +220,15 @@ const TaskPage = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className={styles.addTaskContainer}>
+        <button
+          onClick={() => setShowAddModal(true)}
+          className={styles.addButton}
+        >
+          <Plus size={18} /> Додати задачу
+        </button>
       </div>
 
       <AnimatePresence>
