@@ -1,71 +1,121 @@
 import React, { useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { Plus, Trash2, UserCircle } from "lucide-react";
 import styles from "./TaskPage.module.css";
 
-const initialData = {
-  todo: ["Створити план", "Зібрати команду"],
-  inProgress: ["Верстати інтерфейс"],
-  done: ["Підключити бекенд"],
+const initialColumns = {
+  todo: { title: "To Do", tasks: [] },
+  inProgress: { title: "In Progress", tasks: [] },
+  done: { title: "Done", tasks: [] },
 };
 
 const TaskPage = () => {
-  const [tasks, setTasks] = useState(initialData);
-  const [dragged, setDragged] = useState(null);
+  const [columns, setColumns] = useState(initialColumns);
+  const [newTaskText, setNewTaskText] = useState("");
+  const [draggingTask, setDraggingTask] = useState(null);
 
-  const onDragStart = (column, index) => {
-    setDragged({ column, index });
+  const handleAddTask = () => {
+    if (!newTaskText.trim()) return;
+
+    const newTask = {
+      id: Date.now().toString(),
+      text: newTaskText,
+    };
+
+    setColumns((prev) => ({
+      ...prev,
+      todo: { ...prev.todo, tasks: [...prev.todo.tasks, newTask] },
+    }));
+    setNewTaskText("");
   };
 
-  const onDrop = (targetColumn, targetIndex = null) => {
-    if (!dragged) return;
-    const item = tasks[dragged.column][dragged.index];
-    const updatedSource = [...tasks[dragged.column]];
-    updatedSource.splice(dragged.index, 1);
+  const handleDragStart = (task, sourceColumn) => {
+    setDraggingTask({ task, sourceColumn });
+  };
 
-    const updatedTarget = [...tasks[targetColumn]];
-    if (targetIndex !== null) {
-      updatedTarget.splice(targetIndex, 0, item);
-    } else {
-      updatedTarget.push(item);
-    }
+  const handleDrop = (targetColumn) => {
+    if (!draggingTask) return;
 
-    setTasks({
-      ...tasks,
-      [dragged.column]: updatedSource,
-      [targetColumn]: updatedTarget,
+    const { task, sourceColumn } = draggingTask;
+
+    if (sourceColumn === targetColumn) return;
+
+    setColumns((prev) => {
+      const sourceTasks = prev[sourceColumn].tasks.filter(
+        (t) => t.id !== task.id
+      );
+      const targetTasks = [...prev[targetColumn].tasks, task];
+
+      return {
+        ...prev,
+        [sourceColumn]: { ...prev[sourceColumn], tasks: sourceTasks },
+        [targetColumn]: { ...prev[targetColumn], tasks: targetTasks },
+      };
     });
-    setDragged(null);
+
+    setDraggingTask(null);
+  };
+
+  const handleDelete = (columnKey, taskId) => {
+    setColumns((prev) => ({
+      ...prev,
+      [columnKey]: {
+        ...prev[columnKey],
+        tasks: prev[columnKey].tasks.filter((t) => t.id !== taskId),
+      },
+    }));
   };
 
   return (
     <div className={styles.taskPage}>
-      {Object.entries(tasks).map(([column, items]) => (
-        <div
-          key={column}
-          className={styles.column}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={() => onDrop(column)}
-        >
-          <h3 className={styles.columnTitle}>
-            {column === "todo"
-              ? "До виконання"
-              : column === "inProgress"
-              ? "В процесі"
-              : "Готово"}
-          </h3>
-          {items.map((task, index) => (
-            <div
-              key={index}
-              className={styles.task}
-              draggable
-              onDragStart={() => onDragStart(column, index)}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={() => onDrop(column, index)}
-            >
-              {task}
-            </div>
-          ))}
+      <header className={styles.header}>
+        <h1 className={styles.logo}>📝 Kanban Board</h1>
+        <div className={styles.inputContainer}>
+          <input
+            className={styles.input}
+            value={newTaskText}
+            onChange={(e) => setNewTaskText(e.target.value)}
+            placeholder="Enter new task"
+          />
+          <button onClick={handleAddTask} className={styles.addButton}>
+            <Plus size={18} /> Add
+          </button>
         </div>
-      ))}
+        <div className={styles.userInfo}>
+          <UserCircle className={styles.userIcon} />
+          <span className={styles.username}>Username</span>
+        </div>
+      </header>
+
+      <div className={styles.columns}>
+        {Object.entries(columns).map(([key, column]) => (
+          <div
+            key={key}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={() => handleDrop(key)}
+            className={styles.column}
+          >
+            <h2 className={styles.columnTitle}>{column.title}</h2>
+            <div className={styles.taskList}>
+              {column.tasks.map((task) => (
+                <motion.div
+                  key={task.id}
+                  draggable
+                  onDragStart={() => handleDragStart(task, key)}
+                  className={styles.task}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <span>{task.text}</span>
+                  <button onClick={() => handleDelete(key, task.id)}>
+                    <Trash2 className={styles.deleteIcon} />
+                  </button>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
