@@ -154,7 +154,7 @@ body {
   overflow-y: auto;
   flex: 1;
   padding-right: 0.5rem;
-  scrollbar-width: none; /* Firefox: приховати */
+  scrollbar-width: none;
 }
 
 .taskList::-webkit-scrollbar {
