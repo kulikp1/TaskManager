@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
+// TaskPage.jsx
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Trash2, Pencil } from "lucide-react";
 import styles from "./TaskPage.module.css";
 import AddTaskModal from "../Modals/AddTaskModal/AddTaskModal";
 import DeleteConfirmModal from "../Modals/DeleteConfirmModal/DeleteConfirmModal";
-import { div } from "framer-motion/client";
 
 const initialColumns = {
   todo: { title: "To Do", tasks: [] },
@@ -20,12 +20,12 @@ const TaskPage = () => {
   const [editingTask, setEditingTask] = useState(null);
   const [editedText, setEditedText] = useState("");
   const [editedDeadline, setEditedDeadline] = useState("");
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(null); // null or columnKey
   const [newTaskText, setNewTaskText] = useState("");
   const [newTaskDeadline, setNewTaskDeadline] = useState("");
 
   const handleAddTask = () => {
-    if (!newTaskText.trim()) return;
+    if (!newTaskText.trim() || !showAddModal) return;
 
     const newTask = {
       id: Date.now().toString(),
@@ -36,12 +36,15 @@ const TaskPage = () => {
 
     setColumns((prev) => ({
       ...prev,
-      todo: { ...prev.todo, tasks: [...prev.todo.tasks, newTask] },
+      [showAddModal]: {
+        ...prev[showAddModal],
+        tasks: [...prev[showAddModal].tasks, newTask],
+      },
     }));
 
     setNewTaskText("");
     setNewTaskDeadline("");
-    setShowAddModal(false);
+    setShowAddModal(null);
   };
 
   const handleDragStart = (task, sourceColumn) => {
@@ -143,7 +146,15 @@ const TaskPage = () => {
               onDrop={() => handleDrop(key)}
               className={styles.column}
             >
-              <h2 className={styles.columnTitle}>{column.title}</h2>
+              <div className={styles.columnHeader}>
+                <h2 className={styles.columnTitle}>{column.title}</h2>
+                <button
+                  onClick={() => setShowAddModal(key)}
+                  className={styles.addIconButton}
+                >
+                  +
+                </button>
+              </div>
               <div className={styles.taskList}>
                 {column.tasks.map((task) => {
                   const isEditing =
@@ -226,15 +237,6 @@ const TaskPage = () => {
           ))}
         </div>
 
-        <div className={styles.addTaskContainer}>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className={styles.addButton}
-          >
-            <Plus size={18} /> Додати задачу
-          </button>
-        </div>
-
         <AnimatePresence>
           {showAddModal && (
             <AddTaskModal
@@ -243,7 +245,7 @@ const TaskPage = () => {
               setNewTaskText={setNewTaskText}
               setNewTaskDeadline={setNewTaskDeadline}
               onAdd={handleAddTask}
-              onClose={() => setShowAddModal(false)}
+              onClose={() => setShowAddModal(null)}
             />
           )}
         </AnimatePresence>

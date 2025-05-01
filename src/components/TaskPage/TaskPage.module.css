@@ -94,7 +94,7 @@ body {
   justify-content: center;
 }
 
-.addButton {
+/* .addButton {
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -113,6 +113,50 @@ body {
 .addButton:hover {
   background: linear-gradient(90deg, #2563eb, #3b82f6);
   transform: translateY(-2px) scale(1.05);
+} */
+.columnHeader {
+  position: relative;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.columnTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(to right, #1e3a8a, #3b82f6);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  flex: 1;
+  position: relative;
+}
+
+.columnHeader button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-80%);
+  width: 8px;
+
+  background: transparent;
+  border: 2px solid #3b82f6;
+  color: #3b82f6;
+  border-radius: 50%;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.columnHeader button:hover {
+  background: #3b82f6;
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .column {
