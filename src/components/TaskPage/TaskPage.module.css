@@ -125,7 +125,7 @@ body {
   flex-direction: column;
   gap: 1rem;
   flex: 1;
-  height: 600px; /* 🔸 Став фіксовану висоту тут */
+  height: 600px;
 }
 
 .columnTitle {
