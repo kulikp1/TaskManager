@@ -168,7 +168,6 @@ const TaskPage = () => {
                       draggable={!isEditing}
                       onDragStart={() => handleDragStart(task, key)}
                       className={`${styles.task} ${styles[deadlineStatus]}`}
-                      whileHover={{ scale: 1.02 }}
                     >
                       {isEditing ? (
                         <>
@@ -213,10 +212,14 @@ const TaskPage = () => {
                             </div>
                           </div>
                           <div className={styles.taskActions}>
-                            <button onClick={() => handleEdit(task, key)}>
+                            <button
+                              className={styles.edit}
+                              onClick={() => handleEdit(task, key)}
+                            >
                               <Pencil size={16} />
                             </button>
                             <button
+                              className={styles.delete}
                               onClick={() =>
                                 setConfirmDelete({
                                   columnKey: key,
