@@ -196,7 +196,7 @@ body {
 }
 
 .task {
-  background: #fafafa;
+  background: transparent;
   border: 1px solid #e5e7eb;
   border-radius: 1rem;
   padding: 2rem;
@@ -223,10 +223,19 @@ body {
 
 .taskMeta {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.75rem;
-  color: #6b7280;
+  flex-direction: column; /* Вертикальне розміщення */
+  gap: 0.25rem; /* Невеликий проміжок між рядками */
+  font-size: 0.85rem;
+  color: #454545;
+  margin-top: 0.5rem;
+}
+
+.taskMeta small {
+  line-height: 1.4;
+}
+
+.taskMeta small:last-child {
+  color: #b00020; /* Дедлайн – виділений кольором */
 }
 
 .taskActions {
@@ -344,15 +353,15 @@ body {
 
 .overdue {
   border-left: 4px solid #e74c3c;
-  background-color: #fbeaea;
+  /* background-color: #fbeaea; */
 }
 
 .dueToday {
   border-left: 4px solid #f39c12;
-  background-color: #fff8e6;
+  /* background-color: #fff8e6; */
 }
 
 .upcoming {
   border-left: 4px solid #2ecc71;
-  background-color: #ecfdf5;
+  /* background-color: #ecfdf5; */
 }
