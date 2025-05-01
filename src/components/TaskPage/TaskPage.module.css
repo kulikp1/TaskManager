@@ -164,7 +164,7 @@ body {
 
 .taskList:hover {
   scrollbar-width: thin;
-  scrollbar-color: #8cbaf3 #f1f5f9; /* Firefox */
+  scrollbar-color: #8cbaf3 #f1f5f9;
 }
 
 .taskList:hover::-webkit-scrollbar {
