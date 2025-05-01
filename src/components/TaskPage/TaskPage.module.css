@@ -199,13 +199,15 @@ body {
   background: #fafafa;
   border: 1px solid #e5e7eb;
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
   cursor: pointer;
+
+  position: relative; /* додано для абсолютного позиціонування */
 }
 
 .task:hover {
@@ -228,12 +230,14 @@ body {
 }
 
 .taskActions {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
   display: flex;
-  gap: 0.75rem;
-  margin-top: auto;
+  gap: 0.5rem;
 }
 
-.taskActions button {
+/* .taskActions button {
   background: #f3f4f6;
   color: #374151;
   border: none;
@@ -243,9 +247,52 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
+} */
+.edit,
+.delete {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0e0e0;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
 }
 
-.taskActions button:hover {
+.edit:hover,
+.delete:hover {
+  transform: scale(1.1);
+  background-color: #d5d5d5;
+}
+
+.edit {
+  background: transparent;
+  color: #3b82f6;
+  border-color: #d1d5db;
+  border: 1px solid #3b82f6;
+}
+
+.edit:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+.delete {
+  background: transparent;
+  color: #ef4444;
+  border-color: #fee2e2;
+  border: 1px solid #ef4444;
+}
+
+.delete:hover {
+  background: #ef4444;
+  color: white;
+}
+/* .taskActions button:hover {
   background: #e5e7eb;
   color: #111827;
 }
@@ -253,7 +300,7 @@ body {
 .taskActions button:focus {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
-}
+} */
 
 .editContainer {
   display: flex;
