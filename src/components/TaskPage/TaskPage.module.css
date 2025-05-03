@@ -246,17 +246,6 @@ body {
   gap: 0.5rem;
 }
 
-/* .taskActions button {
-  background: #f3f4f6;
-  color: #374151;
-  border: none;
-  border-radius: 0.75rem;
-  padding: 0.4rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-} */
 .edit,
 .delete {
   width: 30px;
@@ -301,15 +290,6 @@ body {
   background: #ef4444;
   color: white;
 }
-/* .taskActions button:hover {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-.taskActions button:focus {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-} */
 
 .editContainer {
   display: flex;
@@ -353,15 +333,12 @@ body {
 
 .overdue {
   border-left: 4px solid #e74c3c;
-  /* background-color: #fbeaea; */
 }
 
 .dueToday {
   border-left: 4px solid #f39c12;
-  /* background-color: #fff8e6; */
 }
 
 .upcoming {
   border-left: 4px solid #2ecc71;
-  /* background-color: #ecfdf5; */
 }
