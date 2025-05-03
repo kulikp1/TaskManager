@@ -179,7 +179,7 @@ body {
   flex: 1;
   padding-right: 0.75rem;
   scrollbar-width: thin;
-  scrollbar-color: #e5e7eb transparent;
+  scrollbar-color: #a5c0f7 transparent;
 }
 
 .taskList::-webkit-scrollbar {
