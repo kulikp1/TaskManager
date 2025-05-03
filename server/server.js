@@ -2,9 +2,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import cors from 'cors'; 
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 import authRoutes from './routes/auth.js';
+import taskRoutes from './routes/tasks.js';
 
 dotenv.config();
 
@@ -15,16 +17,15 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
-
 app.use(express.json());
+app.use(cookieParser()); // якщо використовуєш токени через куки
 
-mongoose.connect(process.env.MONGO_URI, {
-  
-})
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB підключено'))
   .catch(err => console.error('Помилка MongoDB:', err));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/tasks', taskRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Сервер запущено на порті ${PORT}`));

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-// TaskPage.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Trash2, Pencil } from "lucide-react";
 import styles from "./TaskPage.module.css";
@@ -24,23 +24,68 @@ const TaskPage = () => {
   const [newTaskText, setNewTaskText] = useState("");
   const [newTaskDeadline, setNewTaskDeadline] = useState("");
 
-  const handleAddTask = () => {
-    if (!newTaskText.trim() || !showAddModal) return;
+  const token = localStorage.getItem("token");
 
-    const newTask = {
-      id: Date.now().toString(),
-      text: newTaskText,
-      createdAt: new Date().toISOString(),
-      deadline: newTaskDeadline || "",
+  useEffect(() => {
+    const fetchTasks = async () => {
+      if (!token) return;
+      try {
+        const res = await axios.get("http://localhost:3000/api/tasks", {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const tasksByColumn = {
+          todo: [],
+          inProgress: [],
+          done: [],
+        };
+
+        res.data.forEach((task) => {
+          tasksByColumn[task.status].push(task);
+        });
+
+        setColumns({
+          todo: { title: "To Do", tasks: tasksByColumn.todo },
+          inProgress: { title: "In Progress", tasks: tasksByColumn.inProgress },
+          done: { title: "Done", tasks: tasksByColumn.done },
+        });
+      } catch (err) {
+        console.error("Помилка при завантаженні тасків:", err);
+      }
     };
 
-    setColumns((prev) => ({
-      ...prev,
-      [showAddModal]: {
-        ...prev[showAddModal],
-        tasks: [...prev[showAddModal].tasks, newTask],
-      },
-    }));
+    fetchTasks();
+  }, [token]);
+
+  const handleAddTask = async () => {
+    if (!newTaskText.trim() || !showAddModal || !token) return;
+
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/tasks/add",
+        {
+          text: newTaskText,
+          deadline: newTaskDeadline || null,
+          status: showAddModal,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const newTask = res.data;
+
+      setColumns((prev) => ({
+        ...prev,
+        [showAddModal]: {
+          ...prev[showAddModal],
+          tasks: [...prev[showAddModal].tasks, newTask],
+        },
+      }));
+    } catch (err) {
+      console.error("Не вдалося додати таску:", err);
+    }
 
     setNewTaskText("");
     setNewTaskDeadline("");
@@ -59,9 +104,12 @@ const TaskPage = () => {
 
     setColumns((prev) => {
       const sourceTasks = prev[sourceColumn].tasks.filter(
-        (t) => t.id !== task.id
+        (t) => t._id !== task._id
       );
-      const targetTasks = [...prev[targetColumn].tasks, task];
+      const targetTasks = [
+        ...prev[targetColumn].tasks,
+        { ...task, status: targetColumn },
+      ];
 
       return {
         ...prev,
@@ -71,6 +119,15 @@ const TaskPage = () => {
     });
 
     setDraggingTask(null);
+
+    // Оновлення статусу на сервері
+    axios
+      .put(
+        `http://localhost:3000/api/tasks/${task._id}`,
+        { status: targetColumn },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .catch((err) => console.error("Помилка при зміні статусу:", err));
   };
 
   const confirmAndDelete = () => {
@@ -80,21 +137,27 @@ const TaskPage = () => {
       ...prev,
       [columnKey]: {
         ...prev[columnKey],
-        tasks: prev[columnKey].tasks.filter((t) => t.id !== taskId),
+        tasks: prev[columnKey].tasks.filter((t) => t._id !== taskId),
       },
     }));
 
     setConfirmDelete(null);
+
+    axios
+      .delete(`http://localhost:3000/api/tasks/${taskId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .catch((err) => console.error("Помилка при видаленні:", err));
   };
 
   const handleEdit = (task, columnKey) => {
-    setEditingTask({ taskId: task.id, columnKey });
+    setEditingTask({ taskId: task._id, columnKey });
     setEditedText(task.text);
-    setEditedDeadline(task.deadline || "");
+    setEditedDeadline(task.deadline?.split("T")[0] || "");
   };
 
   const saveEdit = () => {
-    if (!editingTask) return;
+    if (!editingTask || !token) return;
 
     const { columnKey, taskId } = editingTask;
 
@@ -103,12 +166,20 @@ const TaskPage = () => {
       [columnKey]: {
         ...prev[columnKey],
         tasks: prev[columnKey].tasks.map((task) =>
-          task.id === taskId
+          task._id === taskId
             ? { ...task, text: editedText, deadline: editedDeadline }
             : task
         ),
       },
     }));
+
+    axios
+      .put(
+        `http://localhost:3000/api/tasks/${taskId}`,
+        { text: editedText, deadline: editedDeadline },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .catch((err) => console.error("Помилка при редагуванні:", err));
 
     setEditingTask(null);
   };
@@ -130,7 +201,6 @@ const TaskPage = () => {
     <div>
       <header className={styles.header}>
         <div className={styles.headerLeft}>Task Manager</div>
-
         <div className={styles.headerRight}>
           <span>User</span>
           <div className={styles.avatarPlaceholder}>U</div>
@@ -152,48 +222,44 @@ const TaskPage = () => {
                   onClick={() => setShowAddModal(key)}
                   className={styles.addIconButton}
                 >
-                  +
+                  <Plus size={20} />
                 </button>
               </div>
               <div className={styles.taskList}>
                 {column.tasks.map((task) => {
                   const isEditing =
-                    editingTask?.taskId === task.id &&
+                    editingTask?.taskId === task._id &&
                     editingTask?.columnKey === key;
                   const deadlineStatus = getDeadlineStatus(task.deadline);
 
                   return (
                     <motion.div
-                      key={task.id}
+                      key={task._id}
                       draggable={!isEditing}
                       onDragStart={() => handleDragStart(task, key)}
                       className={`${styles.task} ${styles[deadlineStatus]}`}
                     >
                       {isEditing ? (
-                        <>
-                          <div className={styles.editContainer}>
-                            <input
-                              className={styles.editInput}
-                              value={editedText}
-                              onChange={(e) => setEditedText(e.target.value)}
-                              placeholder="Назва задачі"
-                            />
-                            <input
-                              type="date"
-                              className={styles.editDate}
-                              value={editedDeadline}
-                              onChange={(e) =>
-                                setEditedDeadline(e.target.value)
-                              }
-                            />
-                            <button
-                              className={styles.saveButton}
-                              onClick={saveEdit}
-                            >
-                              Зберегти
-                            </button>
-                          </div>
-                        </>
+                        <div className={styles.editContainer}>
+                          <input
+                            className={styles.editInput}
+                            value={editedText}
+                            onChange={(e) => setEditedText(e.target.value)}
+                            placeholder="Назва задачі"
+                          />
+                          <input
+                            type="date"
+                            className={styles.editDate}
+                            value={editedDeadline}
+                            onChange={(e) => setEditedDeadline(e.target.value)}
+                          />
+                          <button
+                            className={styles.saveButton}
+                            onClick={saveEdit}
+                          >
+                            Зберегти
+                          </button>
+                        </div>
                       ) : (
                         <>
                           <div>
@@ -223,7 +289,7 @@ const TaskPage = () => {
                               onClick={() =>
                                 setConfirmDelete({
                                   columnKey: key,
-                                  taskId: task.id,
+                                  taskId: task._id,
                                 })
                               }
                             >
