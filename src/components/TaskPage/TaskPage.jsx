@@ -20,7 +20,7 @@ const TaskPage = () => {
   const [editingTask, setEditingTask] = useState(null);
   const [editedText, setEditedText] = useState("");
   const [editedDeadline, setEditedDeadline] = useState("");
-  const [showAddModal, setShowAddModal] = useState(null); // null or columnKey
+  const [showAddModal, setShowAddModal] = useState(null);
   const [newTaskText, setNewTaskText] = useState("");
   const [newTaskDeadline, setNewTaskDeadline] = useState("");
 
