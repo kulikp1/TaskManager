@@ -223,8 +223,8 @@ body {
 
 .taskMeta {
   display: flex;
-  flex-direction: column; /* Вертикальне розміщення */
-  gap: 0.25rem; /* Невеликий проміжок між рядками */
+  flex-direction: column;
+  gap: 0.25rem;
   font-size: 0.85rem;
   color: #454545;
   margin-top: 0.5rem;
@@ -235,7 +235,7 @@ body {
 }
 
 .taskMeta small:last-child {
-  color: #b00020; /* Дедлайн – виділений кольором */
+  color: #b00020;
 }
 
 .taskActions {
