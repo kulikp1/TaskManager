@@ -2,7 +2,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import cors from 'cors'; // <--- Додано
+import cors from 'cors'; 
 
 import authRoutes from './routes/auth.js';
 
@@ -10,7 +10,6 @@ dotenv.config();
 
 const app = express();
 
-// ✅ Дозволити CORS для фронтенду на 5173 порту
 app.use(cors({
   origin: 'http://localhost:5173',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
