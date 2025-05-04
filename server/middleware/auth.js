@@ -12,7 +12,7 @@ export const verifyToken = (req, res, next) => {
     if (err) {
       return res.status(403).json({ message: 'Невірний токен' });
     }
-    req.user = user; // user має містити поле id
+    req.user = user;
     next();
   });
 };
