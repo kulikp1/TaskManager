@@ -18,7 +18,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
-app.use(cookieParser()); // якщо використовуєш токени через куки
+app.use(cookieParser()); 
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB підключено'))
