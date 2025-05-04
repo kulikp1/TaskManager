@@ -42,7 +42,7 @@ router.post("/add", verifyToken, async (req, res) => {
 router.put("/:id", verifyToken, async (req, res) => {
   try {
     const task = await Task.findOneAndUpdate(
-      { _id: req.params.id, user: req.user.id },
+      { _id: req.params.id, user: req.user.userId },
       req.body,
       { new: true }
     );
@@ -61,7 +61,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
   try {
     const task = await Task.findOneAndDelete({
       _id: req.params.id,
-      user: req.user.id,
+      user: req.user.userId,
     });
 
     if (!task) {
