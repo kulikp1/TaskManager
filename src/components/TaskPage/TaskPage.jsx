@@ -120,7 +120,6 @@ const TaskPage = () => {
 
     setDraggingTask(null);
 
-    // Оновлення статусу на сервері
     axios
       .put(
         `http://localhost:3000/api/tasks/${task._id}`,
