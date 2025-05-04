@@ -57,7 +57,6 @@ router.put("/:id", verifyToken, async (req, res) => {
   }
 });
 
-// Видалити таску
 router.delete("/:id", verifyToken, async (req, res) => {
   try {
     const task = await Task.findOneAndDelete({
