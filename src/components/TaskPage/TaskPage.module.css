@@ -33,7 +33,7 @@ body {
   }
 }
 
-.header {
+/* .header {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -87,7 +87,7 @@ body {
   align-items: center;
   border-radius: 50%;
   box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
-}
+}*/
 
 .addTaskContainer {
   display: flex;
@@ -345,7 +345,7 @@ body {
   border-left: 4px solid #2ecc71;
 }
 
-.userMenuWrapper {
+/* .userMenuWrapper {
   position: relative;
   cursor: pointer;
 }
@@ -388,4 +388,4 @@ body {
 
 .dropdownMenu button:hover {
   background-color: #f0f0f0;
-}
+} */

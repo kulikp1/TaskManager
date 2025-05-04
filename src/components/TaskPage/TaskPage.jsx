@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -7,7 +6,7 @@ import { Plus, Trash2, Pencil } from "lucide-react";
 import styles from "./TaskPage.module.css";
 import AddTaskModal from "../Modals/AddTaskModal/AddTaskModal";
 import DeleteConfirmModal from "../Modals/DeleteConfirmModal/DeleteConfirmModal";
-import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import Header from "../Header/Header";
 
 const initialColumns = {
   todo: { title: "To Do", tasks: [] },
@@ -200,49 +199,7 @@ const TaskPage = () => {
 
   return (
     <div>
-      <header className={styles.header}>
-        <div className={styles.headerLeft}>Task Manager</div>
-        <div className={styles.headerRight}>
-          {(() => {
-            const email = localStorage.getItem("email") || "user@example.com";
-            const username = email.split("@")[0];
-            const initial = username.charAt(0).toUpperCase();
-
-            const [menuOpen, setMenuOpen] = React.useState(false);
-
-            const toggleMenu = () => setMenuOpen((prev) => !prev);
-            const handleLogout = () => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("email");
-              window.location.href = "/login";
-            };
-
-            return (
-              <div className={styles.userMenuWrapper}>
-                <div className={styles.userInfo} onClick={toggleMenu}>
-                  <span>{username}</span>
-                  <div className={styles.avatarPlaceholder}>{initial}</div>
-                  <span className={styles.chevron}>
-                    {menuOpen ? (
-                      <FaChevronUp size={14} />
-                    ) : (
-                      <FaChevronDown size={14} />
-                    )}
-                  </span>
-                </div>
-                {menuOpen && (
-                  <div className={styles.dropdownMenu}>
-                    <button onClick={() => alert("Налаштування")}>
-                      Settings
-                    </button>
-                    <button onClick={handleLogout}>LogOut</button>
-                  </div>
-                )}
-              </div>
-            );
-          })()}
-        </div>
-      </header>
+      <Header />
 
       <div className={styles.taskPage}>
         <div className={styles.columns}>
