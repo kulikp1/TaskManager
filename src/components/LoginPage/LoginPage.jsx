@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+// src/pages/LoginPage.jsx
+import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 import styles from "./LoginPage.module.css";
 import Logo from "../../assets/logo.png";
-import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login } = useContext(UserContext);
 
   return (
     <div className={styles.container}>
@@ -37,24 +40,19 @@ const LoginPage = () => {
                 "http://localhost:3000/api/auth/login",
                 {
                   method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
+                  headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(values),
                 }
               );
 
               const data = await response.json();
-
-              if (!response.ok) {
+              if (!response.ok)
                 throw new Error(data.message || "Помилка входу");
-              }
 
-              // Збереження токена (і при бажанні імені)
               localStorage.setItem("token", data.token);
               localStorage.setItem("username", data.user.username);
+              login(values.email); // оновлення контексту
 
-              // Перехід на захищену сторінку
               navigate("/home");
             } catch (err) {
               setErrors({ password: err.message });
@@ -125,7 +123,6 @@ const LoginPage = () => {
                     <>Увійти ➔</>
                   )}
                 </button>
-
                 <button
                   type="button"
                   className={`${styles.loginButton} ${styles.secondaryButton}`}

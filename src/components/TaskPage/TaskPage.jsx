@@ -201,8 +201,17 @@ const TaskPage = () => {
       <header className={styles.header}>
         <div className={styles.headerLeft}>Task Manager</div>
         <div className={styles.headerRight}>
-          <span>User</span>
-          <div className={styles.avatarPlaceholder}>U</div>
+          {(() => {
+            const email = localStorage.getItem("email") || "user@example.com";
+            const initial = email.charAt(0).toUpperCase();
+
+            return (
+              <>
+                <span>{email}</span>
+                <div className={styles.avatarPlaceholder}>{initial}</div>
+              </>
+            );
+          })()}
         </div>
       </header>
 
