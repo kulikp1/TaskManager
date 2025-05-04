@@ -39,7 +39,6 @@ router.post("/add", verifyToken, async (req, res) => {
   }
 });
 
-// Оновити таску
 router.put("/:id", verifyToken, async (req, res) => {
   try {
     const task = await Task.findOneAndUpdate(
