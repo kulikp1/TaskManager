@@ -5,7 +5,6 @@ import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Отримати всі таски користувача
 router.get("/", verifyToken, async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.userId });
@@ -15,7 +14,6 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
-// Додати нову таску
 router.post("/add", verifyToken, async (req, res) => {
   try {
     const { text, deadline, status } = req.body;
