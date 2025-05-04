@@ -203,11 +203,12 @@ const TaskPage = () => {
         <div className={styles.headerRight}>
           {(() => {
             const email = localStorage.getItem("email") || "user@example.com";
-            const initial = email.charAt(0).toUpperCase();
+            const username = email.split("@")[0];
+            const initial = username.charAt(0).toUpperCase();
 
             return (
               <>
-                <span>{email}</span>
+                <span>{username}</span>
                 <div className={styles.avatarPlaceholder}>{initial}</div>
               </>
             );
