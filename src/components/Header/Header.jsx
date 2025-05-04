@@ -22,16 +22,18 @@ const Header = () => {
       <div className={styles.headerLeft}>Task Manager</div>
       <div className={styles.headerRight}>
         <div className={styles.userMenuWrapper}>
-          <div className={styles.userInfo} onClick={toggleMenu}>
+          <div className={styles.userInfo}>
             <span>{username}</span>
             <div className={styles.avatarPlaceholder}>{initial}</div>
-            <span className={styles.chevron}>
-              {menuOpen ? (
-                <FaChevronUp size={14} />
-              ) : (
-                <FaChevronDown size={14} />
-              )}
-            </span>
+            <button className={styles.toggleBtn} onClick={toggleMenu}>
+              <span className={styles.chevron}>
+                {menuOpen ? (
+                  <FaChevronUp size={14} />
+                ) : (
+                  <FaChevronDown size={14} />
+                )}
+              </span>
+            </button>
           </div>
           {menuOpen && (
             <div className={styles.dropdownMenu}>
