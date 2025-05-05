@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Header.module.css";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import SettingsModal from "../SettingsModal/SettingsModal";
 
 const Header = () => {
   const email = localStorage.getItem("email") || "user@example.com";
@@ -8,8 +9,13 @@ const Header = () => {
   const initial = username.charAt(0).toUpperCase();
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
+  const toggleSettings = () => {
+    setIsSettingsOpen(true);
+    setMenuOpen(false);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -18,32 +24,39 @@ const Header = () => {
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.headerLeft}>Task Manager</div>
-      <div className={styles.headerRight}>
-        <div className={styles.userMenuWrapper}>
-          <div className={styles.userInfo}>
-            <span>{username}</span>
-            <div className={styles.avatarPlaceholder}>{initial}</div>
-            <button className={styles.toggleBtn} onClick={toggleMenu}>
-              <span className={styles.chevron}>
-                {menuOpen ? (
-                  <FaChevronUp size={14} />
-                ) : (
-                  <FaChevronDown size={14} />
-                )}
-              </span>
-            </button>
-          </div>
-          {menuOpen && (
-            <div className={styles.dropdownMenu}>
-              <button onClick={() => alert("Налаштування")}>Settings</button>
-              <button onClick={handleLogout}>LogOut</button>
+    <>
+      <header className={styles.header}>
+        <div className={styles.headerLeft}>Task Manager</div>
+        <div className={styles.headerRight}>
+          <div className={styles.userMenuWrapper}>
+            <div className={styles.userInfo}>
+              <span>{username}</span>
+              <div className={styles.avatarPlaceholder}>{initial}</div>
+              <button className={styles.toggleBtn} onClick={toggleMenu}>
+                <span className={styles.chevron}>
+                  {menuOpen ? (
+                    <FaChevronUp size={14} />
+                  ) : (
+                    <FaChevronDown size={14} />
+                  )}
+                </span>
+              </button>
             </div>
-          )}
+            {menuOpen && (
+              <div className={styles.dropdownMenu}>
+                <button onClick={toggleSettings}>Settings</button>
+                <button onClick={handleLogout}>LogOut</button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
+    </>
   );
 };
 
