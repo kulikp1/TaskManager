@@ -1,0 +1,19 @@
+html,
+body,
+* {
+  cursor: url("/cursors/cursorBlack.png") 0 0, auto !important;
+}
+
+*:hover {
+  cursor: url("/cursors/cursorBlack.png") 0 0, auto !important;
+}
+
+/* html,
+body,
+* {
+  cursor: url("/cursors/cursor.png") 0 0, auto !important;
+}
+
+*:hover {
+  cursor: url("/cursors/cursor.png") 0 0, auto !important;
+} */
