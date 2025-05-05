@@ -6,13 +6,34 @@ const SettingsModal = ({ isOpen, onClose }) => {
 
   return (
     <div className={styles.backdrop} onClick={onClose}>
-      <div
-        className={styles.modal}
-        onClick={(e) => e.stopPropagation()} // Щоб клік по модалці не закривав її
-      >
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h2>Налаштування</h2>
-        <p>Тут можна буде додати поля для налаштувань користувача.</p>
-        <button onClick={onClose}>Закрити</button>
+
+        <div className={styles.section}>
+          <label htmlFor="username">Ім’я користувача</label>
+          <input
+            id="username"
+            type="text"
+            placeholder="Введіть нове ім’я"
+            className={styles.input}
+            disabled
+          />
+        </div>
+
+        <div className={styles.section}>
+          <label>Аватар</label>
+          <div className={styles.avatarOptions}>
+            <div className={styles.avatar}>🧑</div>
+            <div className={styles.avatar}>👩</div>
+            <div className={styles.avatar}>🧔</div>
+            <div className={styles.avatar}>👨‍💻</div>
+          </div>
+          <p className={styles.note}>(Поки що вибір аватара не активний)</p>
+        </div>
+
+        <button className={styles.closeBtn} onClick={onClose}>
+          Закрити
+        </button>
       </div>
     </div>
   );
