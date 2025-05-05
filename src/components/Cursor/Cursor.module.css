@@ -1,0 +1,11 @@
+.custom-cursor {
+  width: 24px;
+  height: 24px;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  background: url("/cursors/cursorBlack.png") 0 0 no-repeat;
+  background-size: contain;
+  mix-blend-mode: difference; /* або прибери, якщо не треба */
+  transform: translate(-50%, -50%);
+}
