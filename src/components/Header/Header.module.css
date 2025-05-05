@@ -87,6 +87,7 @@
   transition: opacity 0.2s ease, transform 0.2s ease;
   transform: translateY(0);
   animation: dropdownFadeIn 0.3s ease forwards;
+  outline: none;
 }
 
 @keyframes dropdownFadeIn {
@@ -109,7 +110,7 @@
   border: none;
   font-size: 14px;
   color: #1f2937;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: background 0.2s ease, color 0.2s ease;
 }
 
@@ -122,7 +123,7 @@
 .toggleBtn {
   background: transparent;
   border: none;
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 6px;
   display: flex;
   align-items: center;
