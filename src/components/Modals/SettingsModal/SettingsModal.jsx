@@ -132,10 +132,14 @@ const SettingsModal = ({
           ) : (
             <p className={styles.note}>Не вибрано аватар</p>
           )}
+          <label htmlFor="fileUpload" className={styles.uploadLabel}>
+            Обрати файл
+          </label>
           <input
-            id="avatar"
+            id="fileUpload"
             type="file"
             accept="image/*"
+            className={styles.hiddenInput}
             onChange={handleFileChange}
           />
         </div>
