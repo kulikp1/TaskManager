@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 
 import authRoutes from './routes/auth.js';
 import taskRoutes from './routes/tasks.js';
+import userRoutes from './routes/user.js'; 
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
-app.use(cookieParser()); 
+app.use(cookieParser());
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB підключено'))
@@ -26,6 +27,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/user', userRoutes); 
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Сервер запущено на порті ${PORT}`));

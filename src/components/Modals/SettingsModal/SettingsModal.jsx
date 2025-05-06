@@ -1,24 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from "./SettingsModal.module.css";
 
-const SettingsModal = ({ isOpen, onClose }) => {
+const SettingsModal = ({
+  isOpen,
+  onClose,
+  currentUsername,
+  onUsernameChange,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [newUsername, setNewUsername] = useState(currentUsername);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setNewUsername(currentUsername);
+      setError(null);
+    }
+  }, [isOpen, currentUsername]);
 
   if (!isOpen) return null;
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    if (!newUsername.trim()) return;
+
     setIsLoading(true);
     setIsSaved(false);
+    setError(null);
 
-    // Імітація збереження (напр. запиту на сервер)
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const response = await fetch("http://localhost:3000/api/user/username", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+        body: JSON.stringify({ username: newUsername }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Помилка оновлення");
+      }
+
+      localStorage.setItem("email", `${newUsername}@example.com`);
+      onUsernameChange(newUsername);
       setIsSaved(true);
 
-      setTimeout(() => setIsSaved(false), 2000); // приховати повідомлення через 2 сек
-    }, 1500);
+      setTimeout(() => setIsSaved(false), 2000);
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -37,8 +76,10 @@ const SettingsModal = ({ isOpen, onClose }) => {
             type="text"
             placeholder="Введіть нове ім’я"
             className={styles.input}
-            disabled
+            value={newUsername}
+            onChange={(e) => setNewUsername(e.target.value)}
           />
+          {error && <p className={styles.error}>{error}</p>}
         </div>
 
         <div className={styles.section}>

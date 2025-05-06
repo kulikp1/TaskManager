@@ -4,12 +4,14 @@ import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import SettingsModal from "../Modals/SettingsModal/SettingsModal";
 
 const Header = () => {
-  const email = localStorage.getItem("email") || "user@example.com";
-  const username = email.split("@")[0];
-  const initial = username.charAt(0).toUpperCase();
-
+  const [email, setEmail] = useState(
+    localStorage.getItem("email") || "user@example.com"
+  );
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const username = email.split("@")[0];
+  const initial = username.charAt(0).toUpperCase();
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const toggleSettings = () => {
@@ -21,6 +23,10 @@ const Header = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
     window.location.href = "/login";
+  };
+
+  const handleUsernameChange = (newUsername) => {
+    setEmail(`${newUsername}@example.com`);
   };
 
   return (
@@ -55,6 +61,8 @@ const Header = () => {
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
+        currentUsername={username}
+        onUsernameChange={handleUsernameChange}
       />
     </>
   );
