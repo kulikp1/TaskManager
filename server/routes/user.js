@@ -2,18 +2,20 @@ import express from 'express';
 import User from '../models/User.js';
 import { verifyToken } from '../middleware/auth.js';
 import multer from 'multer';
-import cloudinary from '../utils/cloudinary.js'; // Підключаємо Cloudinary
+import cloudinary from '../utils/cloudinary.js';
 
 const router = express.Router();
+
+// Використовуємо пам’ятне сховище для multer
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// ✅ Оновлення username
+// 🔹 PUT: Оновлення імені користувача
 router.put('/username', verifyToken, async (req, res) => {
   try {
     const userId = req.user.userId;
-
     const { username } = req.body;
+
     if (!username) {
       return res.status(400).json({ message: 'Ім’я користувача обов’язкове' });
     }
@@ -33,21 +35,30 @@ router.put('/username', verifyToken, async (req, res) => {
   }
 });
 
-// ✅ Оновлення аватара через Cloudinary
-router.put('/avatar', verifyToken, upload.single('avatar'), async (req, res) => {
+// 🔹 POST: Завантаження аватара
+router.post('/avatar', verifyToken, upload.single('avatar'), async (req, res) => {
   try {
     const userId = req.user.userId;
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'Файл не передано' });
+    }
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'Користувача не знайдено' });
     }
 
-    // Завантаження файлу в Cloudinary
     const stream = cloudinary.uploader.upload_stream(
-      { folder: 'avatars', resource_type: 'image' },
+      {
+        folder: 'avatars',
+        resource_type: 'image',
+        public_id: `user_${userId}_${Date.now()}`,
+        overwrite: true,
+      },
       async (error, result) => {
         if (error) {
-          console.error(error);
+          console.error('Cloudinary error:', error);
           return res.status(500).json({ message: 'Помилка завантаження аватара' });
         }
 
@@ -58,9 +69,9 @@ router.put('/avatar', verifyToken, upload.single('avatar'), async (req, res) => 
       }
     );
 
-    stream.end(req.file.buffer); // Передаємо файл у Cloudinary
+    stream.end(req.file.buffer);
   } catch (err) {
-    console.error(err);
+    console.error('Server error:', err);
     res.status(500).json({ message: 'Помилка сервера' });
   }
 });

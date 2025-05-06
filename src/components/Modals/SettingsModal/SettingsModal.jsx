@@ -35,7 +35,7 @@ const SettingsModal = ({
     setError(null);
 
     try {
-      // 1️⃣ Оновлення username
+      // 🔹 Оновлення імені користувача
       const response = await fetch("http://localhost:3000/api/user/username", {
         method: "PUT",
         headers: {
@@ -53,27 +53,29 @@ const SettingsModal = ({
       localStorage.setItem("email", `${newUsername}@example.com`);
       onUsernameChange(newUsername);
 
-      // 2️⃣ Завантаження аватара, якщо вибрано
+      // 🔹 Завантаження аватара на сервер
       if (selectedFile) {
         const formData = new FormData();
-        formData.append("file", selectedFile);
-        formData.append("upload_preset", "my_unsigned_preset"); // заміни на свій
-        formData.append("cloud_name", "dj3ltkbvg"); // заміни на свій
+        formData.append("avatar", selectedFile);
 
         const uploadResponse = await fetch(
-          `https://api.cloudinary.com/v1_1/dj3ltkbvg/image/upload`,
-          { method: "POST", body: formData }
+          "http://localhost:3000/api/user/avatar",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: formData,
+          }
         );
 
         const uploadData = await uploadResponse.json();
 
         if (!uploadResponse.ok) {
-          throw new Error(
-            uploadData.error?.message || "Помилка завантаження аватара"
-          );
+          throw new Error(uploadData.message || "Помилка завантаження аватара");
         }
 
-        const avatarUrl = uploadData.secure_url;
+        const avatarUrl = uploadData.avatarUrl;
         localStorage.setItem("avatarUrl", avatarUrl);
         onAvatarChange(avatarUrl);
       }
