@@ -7,6 +7,9 @@ const Header = () => {
   const [email, setEmail] = useState(
     localStorage.getItem("email") || "user@example.com"
   );
+  const [avatarUrl, setAvatarUrl] = useState(
+    localStorage.getItem("avatarUrl") || ""
+  );
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -22,11 +25,18 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
+    localStorage.removeItem("avatarUrl");
     window.location.href = "/login";
   };
 
   const handleUsernameChange = (newUsername) => {
     setEmail(`${newUsername}@example.com`);
+    localStorage.setItem("email", `${newUsername}@example.com`);
+  };
+
+  const handleAvatarChange = (newAvatarUrl) => {
+    setAvatarUrl(newAvatarUrl);
+    localStorage.setItem("avatarUrl", newAvatarUrl);
   };
 
   return (
@@ -37,7 +47,15 @@ const Header = () => {
           <div className={styles.userMenuWrapper}>
             <div className={styles.userInfo}>
               <span>{username}</span>
-              <div className={styles.avatarPlaceholder}>{initial}</div>
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt="avatar"
+                  className={styles.avatarImage}
+                />
+              ) : (
+                <div className={styles.avatarPlaceholder}>{initial}</div>
+              )}
               <button className={styles.toggleBtn} onClick={toggleMenu}>
                 <span className={styles.chevron}>
                   {menuOpen ? (
@@ -63,6 +81,7 @@ const Header = () => {
         onClose={() => setIsSettingsOpen(false)}
         currentUsername={username}
         onUsernameChange={handleUsernameChange}
+        onAvatarChange={handleAvatarChange}
       />
     </>
   );
