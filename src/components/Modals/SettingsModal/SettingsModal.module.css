@@ -145,11 +145,10 @@ h2 {
 }
 
 .iconCloseBtn:hover {
-  transform: scale(1.15);
-}
+  background-color: transparent;
 
-.iconCloseBtn:hover .closeIcon {
-  color: var(--danger);
+  transform: scale(1.15);
+  color: red;
 }
 
 .closeIcon {
@@ -158,24 +157,28 @@ h2 {
 }
 
 .confirmBtn {
-  margin-top: 25px;
-  background-color: var(--success);
-  color: white;
-  padding: 0.9rem 1.5rem;
+  display: block;
+  margin: 30px auto 0 auto;
+  padding: 0.9rem 1.8rem;
+  background-color: transparent;
+  color: #2da5dd;
+  border: 2px solid #2da5dd;
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
-  border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
 .confirmBtn:hover {
-  background-color: var(--success-dark);
-  transform: translateY(-2px);
+  background-color: transparent;
+
+  transform: scale(1.03);
 }
 
 .confirmBtn:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
