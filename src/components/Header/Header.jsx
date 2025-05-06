@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Header.module.css";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
-import SettingsModal from "../SettingsModal/SettingsModal";
+import SettingsModal from "../Modals/SettingsModal/SettingsModal";
 
 const Header = () => {
   const email = localStorage.getItem("email") || "user@example.com";
