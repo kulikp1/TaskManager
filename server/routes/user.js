@@ -74,6 +74,19 @@ router.post('/avatar', verifyToken, upload.single('avatar'), async (req, res) =>
     console.error('Server error:', err);
     res.status(500).json({ message: 'Помилка сервера' });
   }
+  // Додати цей роут
+router.get('/profile', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select('username email avatarUrl');
+    if (!user) {
+      return res.status(404).json({ message: 'Користувача не знайдено' });
+    }
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Помилка сервера' });
+  }
+});
 });
 
 export default router;
