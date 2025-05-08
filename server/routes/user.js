@@ -6,11 +6,9 @@ import cloudinary from '../utils/cloudinary.js';
 
 const router = express.Router();
 
-// Використовуємо пам’ятне сховище для multer
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// 🔹 PUT: Оновлення імені користувача
 router.put('/username', verifyToken, async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -35,7 +33,6 @@ router.put('/username', verifyToken, async (req, res) => {
   }
 });
 
-// 🔹 POST: Завантаження аватара
 router.post('/avatar', verifyToken, upload.single('avatar'), async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -74,7 +71,6 @@ router.post('/avatar', verifyToken, upload.single('avatar'), async (req, res) =>
     console.error('Server error:', err);
     res.status(500).json({ message: 'Помилка сервера' });
   }
-  // Додати цей роут
 router.get('/profile', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select('username email avatarUrl');
