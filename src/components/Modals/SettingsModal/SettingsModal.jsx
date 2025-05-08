@@ -17,11 +17,33 @@ const SettingsModal = ({
   const [previewUrl, setPreviewUrl] = useState("");
 
   useEffect(() => {
+    const fetchUserAvatar = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/user/profile", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          credentials: "include",
+        });
+
+        const data = await response.json();
+
+        if (!response.ok)
+          throw new Error(data.message || "Помилка отримання профілю");
+
+        setPreviewUrl(data.avatarUrl || "");
+      } catch (err) {
+        console.error(err);
+        setPreviewUrl("");
+      }
+    };
+
     if (isOpen) {
       setNewUsername(currentUsername);
       setError(null);
-      setPreviewUrl("");
       setSelectedFile(null);
+      fetchUserAvatar();
     }
   }, [isOpen, currentUsername]);
 
@@ -35,7 +57,6 @@ const SettingsModal = ({
     setError(null);
 
     try {
-      // 🔹 Оновлення імені користувача
       const response = await fetch("http://localhost:3000/api/user/username", {
         method: "PUT",
         headers: {
@@ -53,7 +74,6 @@ const SettingsModal = ({
       localStorage.setItem("email", `${newUsername}@example.com`);
       onUsernameChange(newUsername);
 
-      // 🔹 Завантаження аватара на сервер
       if (selectedFile) {
         const formData = new FormData();
         formData.append("avatar", selectedFile);
@@ -76,8 +96,8 @@ const SettingsModal = ({
         }
 
         const avatarUrl = uploadData.avatarUrl;
-        localStorage.setItem("avatarUrl", avatarUrl);
         onAvatarChange(avatarUrl);
+        setPreviewUrl(avatarUrl);
       }
 
       setIsSaved(true);
