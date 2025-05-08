@@ -106,12 +106,12 @@
 .inputWrapper .input {
   width: 100%;
   padding: 1rem;
-  padding-right: 3rem; /* під іконку */
+  padding-right: 3rem;
   border: 1px solid #d1d5db;
   border-radius: 12px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
-  box-sizing: border-box; /* Щоб padding не ламав ширину */
+  box-sizing: border-box;
 }
 
 .input {
