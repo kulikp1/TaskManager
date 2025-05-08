@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import Loader from "../../Loader/Loader";
+// import Loader from "../../Loader/Loader";
 import styles from "./SettingsModal.module.css";
 
 const SettingsModal = ({
@@ -174,6 +174,7 @@ const SettingsModal = ({
           disabled={isLoading}
         >
           {isSaved ? "Збережено!" : "Підтвердити"}
+          {isLoading && <span className={styles.spinner}></span>}
         </button>
       </div>
     </div>

@@ -204,10 +204,21 @@ h2 {
   color: transparent;
   pointer-events: none;
 }
-
-/* .loaderOverlay {
+.spinner {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-} */
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px; /* центр по середині */
+  border: 2px solid #3b82f6;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
