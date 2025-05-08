@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import Loader from "../../Loader/Loader";
 import styles from "./SettingsModal.module.css";
 
 const SettingsModal = ({
@@ -171,7 +172,13 @@ const SettingsModal = ({
           onClick={handleConfirm}
           disabled={isLoading}
         >
-          {isLoading ? "Збереження..." : isSaved ? "Збережено!" : "Підтвердити"}
+          {isLoading ? (
+            <Loader size={20} />
+          ) : isSaved ? (
+            "Збережено!"
+          ) : (
+            "Підтвердити"
+          )}
         </button>
       </div>
     </div>
