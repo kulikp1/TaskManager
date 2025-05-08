@@ -9,6 +9,14 @@
   vertical-align: middle;
 }
 
+.loadingButton {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  cursor: default;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);

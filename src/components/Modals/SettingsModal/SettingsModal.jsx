@@ -166,18 +166,18 @@ const SettingsModal = ({
         </div>
 
         {error && <p className={styles.error}>{error}</p>}
-
         <button
-          className={styles.confirmBtn}
+          className={`${styles.confirmBtn} ${
+            isLoading ? styles.loadingButton : ""
+          }`}
           onClick={handleConfirm}
           disabled={isLoading}
         >
-          {isLoading ? (
-            <Loader size={20} />
-          ) : isSaved ? (
-            "Збережено!"
-          ) : (
-            "Підтвердити"
+          {isSaved ? "Збережено!" : "Підтвердити"}
+          {isLoading && (
+            <span className={styles.loaderOverlay}>
+              <Loader size={20} />
+            </span>
           )}
         </button>
       </div>
