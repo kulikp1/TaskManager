@@ -32,7 +32,7 @@
 
 .modalButtons {
   display: flex;
-  justify-content: center; /* Центрування кнопок */
+  justify-content: center;
   gap: 0.75rem;
   flex-wrap: wrap;
   margin-top: 1rem;
