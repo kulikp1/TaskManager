@@ -1,9 +1,11 @@
 import React from "react";
-import styles from "./Loader.module.css";
+import Style from "./Loader.module.css";
 
-const Loader = ({ size = 24 }) => {
+const Loader = () => {
   return (
-    <span className={styles.loader} style={{ width: size, height: size }} />
+    <div className={Style.loader}>
+      <div className={Style.spinner}></div>
+    </div>
   );
 };
 

@@ -1,13 +1,35 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import HomePage from "../HomePage/HomePage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import TaskPage from "../TaskPage/TaskPage";
 import PrivateRoute from "../../utils/PrivateRoute";
-function App() {
+import Loader from "../Loader/Loader";
+import { useEffect, useState } from "react";
+
+// Обгортка для відображення лоадера під час переходу
+const AppRoutes = () => {
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 500); // 500 мс — штучна затримка для візуалізації лоадера
+
+    return () => clearTimeout(timeout);
+  }, [location]);
+
   return (
-    <Router>
+    <>
+      {loading && <Loader />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -21,6 +43,14 @@ function App() {
           }
         />
       </Routes>
+    </>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <AppRoutes />
     </Router>
   );
 }

@@ -174,11 +174,6 @@ const SettingsModal = ({
           disabled={isLoading}
         >
           {isSaved ? "Збережено!" : "Підтвердити"}
-          {isLoading && (
-            <span className={styles.loaderOverlay}>
-              <Loader size={20} />
-            </span>
-          )}
         </button>
       </div>
     </div>
