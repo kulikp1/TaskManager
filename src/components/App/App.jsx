@@ -13,7 +13,6 @@ import PrivateRoute from "../../utils/PrivateRoute";
 import Loader from "../Loader/Loader";
 import { useEffect, useState } from "react";
 
-// Обгортка для відображення лоадера під час переходу
 const AppRoutes = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
@@ -22,7 +21,7 @@ const AppRoutes = () => {
     setLoading(true);
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 500); // 500 мс — штучна затримка для візуалізації лоадера
+    }, 500);
 
     return () => clearTimeout(timeout);
   }, [location]);
