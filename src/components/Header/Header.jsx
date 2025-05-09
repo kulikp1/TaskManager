@@ -11,7 +11,6 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  // ✅ Отримати профіль користувача з бекенду
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -28,12 +27,10 @@ const Header = () => {
         setEmail(data.email || "user@example.com");
         setAvatarUrl(data.avatarUrl || "");
 
-        // 🧠 Якщо username є в базі — використовуємо його, інакше fallback на email
         const extractedUsername =
           data.username?.trim() || data.email?.split("@")[0] || "User";
         setUsername(extractedUsername);
 
-        // Оновити localStorage, якщо треба
         localStorage.setItem("email", data.email);
         localStorage.setItem("avatarUrl", data.avatarUrl || "");
         localStorage.setItem("username", extractedUsername);
@@ -63,7 +60,7 @@ const Header = () => {
 
   const handleUsernameChange = (newUsername) => {
     setUsername(newUsername);
-    setEmail(`${newUsername}@example.com`); // 🟡 Можеш адаптувати під свою структуру
+    setEmail(`${newUsername}@example.com`);
     localStorage.setItem("username", newUsername);
     localStorage.setItem("email", `${newUsername}@example.com`);
   };
