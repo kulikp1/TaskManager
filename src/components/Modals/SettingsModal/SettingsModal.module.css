@@ -196,7 +196,7 @@ h2 {
   position: relative;
   padding: 10px 20px;
   font-size: 16px;
-  min-width: 140px; /* гарантує, що ширина стабільна */
+  min-width: 140px;
   overflow: hidden;
 }
 
@@ -210,7 +210,7 @@ h2 {
   left: 50%;
   width: 20px;
   height: 20px;
-  margin: -10px 0 0 -10px; /* центр по середині */
+  margin: -10px 0 0 -10px;
   border: 2px solid #3b82f6;
   border-top: 2px solid transparent;
   border-radius: 50%;
