@@ -9,6 +9,8 @@ import styles from "./TaskPage.module.css";
 import AddTaskModal from "../Modals/AddTaskModal/AddTaskModal";
 import DeleteConfirmModal from "../Modals/DeleteConfirmModal/DeleteConfirmModal";
 import Header from "../Header/Header";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const initialColumns = {
   todo: { title: "To Do", tasks: [] },
@@ -86,8 +88,11 @@ const TaskPage = () => {
           tasks: [...prev[showAddModal].tasks, newTask],
         },
       }));
+
+      toast.success("Задачу додано успішно!");
     } catch (err) {
       console.error("Не вдалося додати таску:", err);
+      toast.error("Помилка при додаванні задачі.");
     }
 
     setNewTaskText("");
@@ -149,7 +154,11 @@ const TaskPage = () => {
       .delete(`http://localhost:3000/api/tasks/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .catch((err) => console.error("Помилка при видаленні:", err));
+      .then(() => toast.warn("Задачу видалено."))
+      .catch((err) => {
+        console.error("Помилка при видаленні:", err);
+        toast.error("Помилка при видаленні задачі.");
+      });
   };
 
   const handleEdit = (task, columnKey) => {
@@ -181,7 +190,11 @@ const TaskPage = () => {
         { text: editedText, deadline: editedDeadline },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .catch((err) => console.error("Помилка при редагуванні:", err));
+      .then(() => toast.info("Задачу оновлено."))
+      .catch((err) => {
+        console.error("Помилка при редагуванні:", err);
+        toast.error("Не вдалося оновити задачу.");
+      });
 
     setEditingTask(null);
   };
@@ -332,6 +345,8 @@ const TaskPage = () => {
           )}
         </AnimatePresence>
       </div>
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
