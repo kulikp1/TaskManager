@@ -74,14 +74,12 @@ const Header = () => {
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.headerLeft}>
-          <span className={styles.logo}>Task Manager</span>
+        <div className={styles.headerLeft}>Task Manager</div>
+
+        <div className={styles.headerRight}>
           <Link to="/calendar" className={styles.navLink}>
             Календар
           </Link>
-        </div>
-        <div className={styles.headerLeft}>Task Manager</div>
-        <div className={styles.headerRight}>
           <div className={styles.userMenuWrapper}>
             <div className={styles.userInfo}>
               <span>{username}</span>
