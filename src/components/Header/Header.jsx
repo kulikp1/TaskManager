@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import SettingsModal from "../Modals/SettingsModal/SettingsModal";
+import { Link } from "react-router-dom"; // імпортуй Link
 
 const Header = () => {
   const [email, setEmail] = useState("user@example.com");
@@ -73,6 +74,12 @@ const Header = () => {
   return (
     <>
       <header className={styles.header}>
+        <div className={styles.headerLeft}>
+          <span className={styles.logo}>Task Manager</span>
+          <Link to="/calendar" className={styles.navLink}>
+            Календар
+          </Link>
+        </div>
         <div className={styles.headerLeft}>Task Manager</div>
         <div className={styles.headerRight}>
           <div className={styles.userMenuWrapper}>

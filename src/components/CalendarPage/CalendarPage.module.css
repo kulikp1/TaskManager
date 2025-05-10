@@ -1,0 +1,21 @@
+.calendarContainer {
+  padding: 20px;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.dayColumn {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.dayColumn h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
