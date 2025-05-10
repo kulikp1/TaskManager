@@ -64,6 +64,19 @@ const CalendarPage = () => {
 
   const selectedDayTasks = getTasksForDate(selectedDate);
 
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case "done":
+        return "done";
+      case "inProgress":
+        return "In progress";
+      case "todo":
+        return "To do";
+      default:
+        return "❓ Невідомо";
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -132,13 +145,23 @@ const CalendarPage = () => {
               {selectedDayTasks.length === 0 ? (
                 <p>Немає задач</p>
               ) : (
-                <ul>
+                <div className={styles.taskList}>
                   {selectedDayTasks.map((task) => (
-                    <li key={task._id}>
-                      {task.text} ({task.status})
-                    </li>
+                    <div key={task._id} className={styles.taskCard}>
+                      <div className={styles.taskHeader}>
+                        <span className={styles.taskText}>{task.text}</span>
+                        <span
+                          className={`${styles.status} ${styles[task.status]}`}
+                        >
+                          {getStatusLabel(task.status)}
+                        </span>
+                      </div>
+                      <p className={styles.taskDate}>
+                        Дедлайн: {new Date(task.deadline).toLocaleDateString()}
+                      </p>
+                    </div>
                   ))}
-                </ul>
+                </div>
               )}
             </div>
           </div>
