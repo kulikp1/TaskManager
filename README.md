@@ -98,7 +98,7 @@ cd taskmanager
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 
