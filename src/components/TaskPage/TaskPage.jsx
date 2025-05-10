@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Trash2, Pencil } from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import styles from "./TaskPage.module.css";
 import AddTaskModal from "../Modals/AddTaskModal/AddTaskModal";
 import DeleteConfirmModal from "../Modals/DeleteConfirmModal/DeleteConfirmModal";
@@ -241,11 +243,19 @@ const TaskPage = () => {
                             onChange={(e) => setEditedText(e.target.value)}
                             placeholder="Назва задачі"
                           />
-                          <input
-                            type="date"
+                          <DatePicker
+                            selected={
+                              editedDeadline ? new Date(editedDeadline) : null
+                            }
+                            onChange={(date) =>
+                              setEditedDeadline(
+                                date?.toISOString().split("T")[0] || ""
+                              )
+                            }
+                            placeholderText="Оберіть дедлайн"
                             className={styles.editDate}
-                            value={editedDeadline}
-                            onChange={(e) => setEditedDeadline(e.target.value)}
+                            dateFormat="dd.MM.yyyy"
+                            minDate={new Date()}
                           />
                           <button
                             className={styles.saveButton}
