@@ -118,7 +118,7 @@ cd taskmanager
 
 ---
 
-## 🚀 Project Setup
+## Project Setup
 
 ### 1. Clone the repository
 
