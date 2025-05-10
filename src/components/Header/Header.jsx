@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import SettingsModal from "../Modals/SettingsModal/SettingsModal";
-import { Link } from "react-router-dom"; // імпортуй Link
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [email, setEmail] = useState("user@example.com");
@@ -11,6 +11,7 @@ const Header = () => {
   const [username, setUsername] = useState("User");
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -77,8 +78,21 @@ const Header = () => {
         <div className={styles.headerLeft}>Task Manager</div>
 
         <div className={styles.headerRight}>
-          <Link to="/calendar" className={styles.navLink}>
-            Календар
+          <Link
+            to="/home"
+            className={`${styles.navLink} ${
+              location.pathname === "/home" ? styles.active : ""
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            to="/calendar"
+            className={`${styles.navLink} ${
+              location.pathname === "/calendar" ? styles.active : ""
+            }`}
+          >
+            Calendar
           </Link>
           <div className={styles.userMenuWrapper}>
             <div className={styles.userInfo}>
