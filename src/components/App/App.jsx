@@ -12,6 +12,7 @@ import TaskPage from "../TaskPage/TaskPage";
 import PrivateRoute from "../../utils/PrivateRoute";
 import Loader from "../Loader/Loader";
 import { useEffect, useState } from "react";
+import CalendarPage from "../CalendarPage/CalendarPage";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -38,6 +39,14 @@ const AppRoutes = () => {
           element={
             <PrivateRoute>
               <TaskPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <PrivateRoute>
+              <CalendarPage />
             </PrivateRoute>
           }
         />
