@@ -57,7 +57,7 @@ cd taskmanager
 
 ---
 
-## 📋 Main Features
+## Main Features
 
 - **User Authentication**
 
