@@ -122,7 +122,7 @@ const CalendarPage = () => {
                         {dayTasks.slice(0, 2).map((task) => (
                           <div key={task._id} className={styles.taskItem}>
                             {task.text.length > 15
-                              ? task.text.slice(0, 15) + "…"
+                              ? task.text.slice(0, 5) + "…"
                               : task.text}
                           </div>
                         ))}
