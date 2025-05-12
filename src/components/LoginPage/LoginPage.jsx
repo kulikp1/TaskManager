@@ -51,7 +51,7 @@ const LoginPage = () => {
 
               localStorage.setItem("token", data.token);
               localStorage.setItem("username", data.user.username);
-              login(values.email); // оновлення контексту
+              login(values.email);
 
               navigate("/home");
             } catch (err) {
