@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-// import Loader from "../../Loader/Loader";
 import styles from "./SettingsModal.module.css";
 
 const SettingsModal = ({
