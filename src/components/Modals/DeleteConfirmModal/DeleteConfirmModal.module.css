@@ -17,7 +17,7 @@
   max-width: 600px;
   width: 100%;
   box-shadow: 0 12px 32px rgba(239, 68, 68, 0.4); /* червона тінь */
-  border: 2px solid #dc2626; /* червона обводка */
+  border: 2px solid #dc2626;
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
