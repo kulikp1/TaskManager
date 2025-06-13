@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -60,6 +59,7 @@ const RegisterPage = () => {
               }
             } catch (error) {
               setStatus("Помилка з'єднання з сервером");
+              console.log(error);
             } finally {
               setSubmitting(false);
             }
