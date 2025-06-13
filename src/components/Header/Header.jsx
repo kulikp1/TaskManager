@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
@@ -7,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [email, setEmail] = useState("user@example.com");
+  console.log(email);
   const [avatarUrl, setAvatarUrl] = useState("");
   const [username, setUsername] = useState("User");
   const [menuOpen, setMenuOpen] = useState(false);
